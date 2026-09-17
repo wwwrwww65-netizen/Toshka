@@ -2111,7 +2111,11 @@ tbody td:first-child {
   box-sizing: border-box !important;
 }
 
-.entertainment-links[style*="display: none"] {
+.entertainment-links[style*="display: none"],
+.entertainment-links.hidden,
+.stream-card-link[style*="display: none"],
+.stream-card-link.hidden,
+.stream-card-link[hidden] {
   display: none !important;
 }
 

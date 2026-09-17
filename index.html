@@ -3,10 +3,10 @@
 
 <head>
     <meta charset="UTF-8">
-    <title data-network-name>شبكة الاولى نت اللاسلكية</title>
-    <meta name="description" content="بوابة تسجيل الدخول وشبكة الأولى نت للاتصالات اللاسلكية">
-    <meta property="og:title" content="شبكة الاولى نت">
-    <meta property="og:description" content="بوابة تسجيل الدخول وشبكة الأولى نت للاتصالات اللاسلكية">
+    <title data-network-name>شبكة توشكا نت اللاسلكية</title>
+    <meta name="description" content="بوابة تسجيل الدخول وشبكة توشكا نت للاتصالات والإنترنت اللاسلكي">
+    <meta property="og:title" content="شبكة توشكا نت">
+    <meta property="og:description" content="بوابة تسجيل الدخول وشبكة توشكا نت للاتصالات والإنترنت اللاسلكي">
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, shrink-to-fit=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -68,6 +68,24 @@
                 document.head.appendChild(styleEl);
             }
 
+            // If Lounge/Break is disabled in config.js, immediately insert a style rule to hide it with !important before rendering
+            var isEstrOn = (cfg.estrV === true || (cfg.estrV !== false && cfg.estr && cfg.estr.trim().length > 0)) && typeof cfg.estr === 'string' && cfg.estr.trim().length > 0 && cfg.estr.trim() !== '#' && cfg.estr.trim() !== '';
+            if (!isEstrOn) {
+                var estrStyleEl = document.createElement('style');
+                estrStyleEl.id = 'estr-hide-override-style';
+                estrStyleEl.textContent = '#loungeLink, [data-estr], .estr-card-link { display: none !important; }';
+                document.head.appendChild(estrStyleEl);
+            }
+
+            // If Updates Blocker Strip is disabled in config.js, immediately insert a style rule to hide it with !important before rendering
+            var isUpdatesOn = (cfg.updatesBlockerV === true || (cfg.updatesBlockerV !== false && cfg["enable-updates-blocker"] !== 0 && cfg["enable-updates-blocker"] !== false));
+            if (!isUpdatesOn) {
+                var upStyleEl = document.createElement('style');
+                upStyleEl.id = 'updates-blocker-hide-override-style';
+                upStyleEl.textContent = '#updatesLoginCard, #statusUpdatesCard, .updates-toggle-card, .status-updates-card, [data-updates-blocker] { display: none !important; }';
+                document.head.appendChild(upStyleEl);
+            }
+
             // Early sync before first paint
             document.addEventListener('DOMContentLoaded', function() {
                 var c = window.siteConfig || {};
@@ -91,6 +109,14 @@
                 // Immediate check for quran strip visibility
                 if (c.quranV !== true) {
                     document.querySelectorAll('.quran-strip-card, #quranLoginStrip, #quranStatusStrip').forEach(function(el) {
+                        el.style.setProperty('display', 'none', 'important');
+                    });
+                }
+
+                // Immediate check for updates blocker strip visibility
+                var isUpEarly = (c.updatesBlockerV === true || (c.updatesBlockerV !== false && c["enable-updates-blocker"] !== 0 && c["enable-updates-blocker"] !== false));
+                if (!isUpEarly) {
+                    document.querySelectorAll('#updatesLoginCard, #statusUpdatesCard, .updates-toggle-card, .status-updates-card, [data-updates-blocker]').forEach(function(el) {
                         el.style.setProperty('display', 'none', 'important');
                     });
                 }
@@ -169,39 +195,36 @@
             -webkit-user-drag: none;
         }
 
-        /* Popdown Speed Selection Container Styling */
+        /* Permanent Speed Selection Container Styling (أزرار السرعات ظاهرة دائماً) */
         .speed-selection-popdown-container {
-            max-height: 0;
-            opacity: 0;
-            overflow: hidden;
-            transform: translateY(-10px) scale(0.98);
-            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-                        opacity 0.3s ease,
-                        transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-                        margin 0.3s ease;
-            margin-top: 0;
-            margin-bottom: 0;
-            pointer-events: none;
-            visibility: hidden;
-        }
-
-        .speed-selection-popdown-container.speed-popdown-visible {
-            max-height: 250px;
+            max-height: none;
             opacity: 1;
             overflow: visible;
-            transform: translateY(0) scale(1);
+            transform: none;
             margin-top: 6px;
             margin-bottom: 12px;
             pointer-events: auto;
             visibility: visible;
+            display: block;
         }
 
-        /* Fixed Speed Cards Lock Styling */
+        .speed-selection-popdown-container.speed-popdown-visible {
+            max-height: none;
+            opacity: 1;
+            overflow: visible;
+            transform: none;
+            margin-top: 6px;
+            margin-bottom: 12px;
+            pointer-events: auto;
+            visibility: visible;
+            display: block;
+        }
+
+        /* Fixed Speed Cards Lock Styling - Disabled: Speeds are permanently active for all cards */
         .speed-locked-fixed {
-            opacity: 0.55 !important;
-            pointer-events: none !important;
-            filter: grayscale(0.5) !important;
-            transition: all 0.3s ease !important;
+            opacity: 1 !important;
+            pointer-events: auto !important;
+            filter: none !important;
         }
         .speed-locked-badge {
             background: rgba(223, 171, 82, 0.15) !important;
@@ -209,125 +232,9 @@
             border: 1px solid rgba(223, 171, 82, 0.35) !important;
         }
         .status-speed-locked {
-            pointer-events: none !important;
-            opacity: 0.7 !important;
-            cursor: not-allowed !important;
-            border-color: rgba(255, 255, 255, 0.12) !important;
-        }
-
-        /* حاوية إيداع مبلغ الكرت تحت البنر */
-        .deposit-notice-card {
-            background: linear-gradient(135deg, rgba(14, 23, 41, 0.95), rgba(8, 13, 24, 0.96));
-            border: 1px solid rgba(223, 171, 82, 0.35);
-            border-radius: 14px;
-            padding: 11px 14px;
-            margin: 8px 0 10px 0;
-            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45), 0 0 12px rgba(223, 171, 82, 0.12);
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            gap: 8px;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-        .deposit-notice-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 15%;
-            right: 15%;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(223, 171, 82, 0.6), transparent);
-        }
-        .deposit-notice-title-row {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 7px;
-            font-size: 12.5px;
-            font-weight: 700;
-            color: #FFFFFF;
-            letter-spacing: 0.1px;
-            line-height: 1.4;
-        }
-        .deposit-notice-icon {
-            width: 17px;
-            height: 17px;
-            fill: #DFAB52;
-            flex-shrink: 0;
-            filter: drop-shadow(0 1px 4px rgba(223, 171, 82, 0.4));
-        }
-        .deposit-notice-action-row {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-        }
-        .deposit-copy-btn {
-            background: linear-gradient(135deg, rgba(223, 171, 82, 0.18), rgba(196, 142, 51, 0.12));
-            border: 1px solid rgba(223, 171, 82, 0.48);
-            border-radius: 10px;
-            padding: 6px 14px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            cursor: pointer;
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            color: #DFAB52;
-            font-family: inherit;
-            position: relative;
-            outline: none;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-        }
-        .deposit-copy-btn:hover {
-            background: linear-gradient(135deg, rgba(223, 171, 82, 0.28), rgba(196, 142, 51, 0.22));
-            border-color: rgba(223, 171, 82, 0.75);
-            transform: translateY(-1px);
-            box-shadow: 0 4px 14px rgba(223, 171, 82, 0.25);
-        }
-        .deposit-copy-btn:active {
-            transform: scale(0.97);
-        }
-        .deposit-phone-number {
-            font-size: 15.5px;
-            font-weight: 800;
-            color: #FFFFFF;
-            letter-spacing: 1px;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            direction: ltr;
-        }
-        .deposit-copy-label {
-            font-size: 12px;
-            font-weight: 700;
-            color: #DFAB52;
-            border-right: 1px solid rgba(223, 171, 82, 0.35);
-            padding-right: 8px;
-            margin-right: 2px;
-            white-space: nowrap;
-        }
-        .deposit-copy-icon {
-            width: 15px;
-            height: 15px;
-            fill: #DFAB52;
-            flex-shrink: 0;
-            transition: transform 0.2s ease;
-        }
-        .deposit-copy-btn.copied {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.25), rgba(5, 150, 105, 0.2));
-            border-color: #10B981;
-            color: #34D399;
-        }
-        .deposit-copy-btn.copied .deposit-copy-label {
-            color: #34D399;
-            border-right-color: rgba(16, 185, 129, 0.4);
-        }
-        .deposit-copy-btn.copied .deposit-copy-icon {
-            fill: #34D399;
+            pointer-events: auto !important;
+            opacity: 1 !important;
+            cursor: pointer !important;
         }
 
         /* الإشعار المنبثق العلوي المخصص الأنيق */
@@ -739,29 +646,6 @@
                     </div>
 
                     <!-- ========================================================================= -->
-                    <!-- حاوية إيداع مبلغ الكرت (تحت البنر وفوق الشريط الإخباري) -->
-                    <!-- ========================================================================= -->
-                    <div class="deposit-notice-card" id="depositNoticeBox">
-                        <!-- السطر الأول: نص الإيداع مع أيقونة أنيقة -->
-                        <div class="deposit-notice-title-row">
-                            <svg class="deposit-notice-icon" viewBox="0 0 24 24">
-                                <path d="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
-                            </svg>
-                            <span>قم بإيداع مبلغ الكرت الى الرقم التالي</span>
-                        </div>
-                        <!-- السطر الثاني: زر رقم الجوال مع أيقونة ونص النسخ -->
-                        <div class="deposit-notice-action-row">
-                            <button type="button" class="deposit-copy-btn" id="depositCopyBtn" onclick="copyDepositNumber()" title="انقر لنسخ الرقم">
-                                <span class="deposit-phone-number" id="depositPhoneText">770770409</span>
-                                <span class="deposit-copy-label" id="depositCopyLabel">نسخ الرقم</span>
-                                <svg class="deposit-copy-icon" id="depositCopyIcon" viewBox="0 0 24 24">
-                                    <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- ========================================================================= -->
                     <!-- الشريط الإخباري المتحرك (تحت البنر) -->
                     <!-- ========================================================================= -->
                     <section class="section">
@@ -812,7 +696,39 @@
                     <!-- Separate Cards Login Form Wrapper -->
                     <form class="login-form" name="login" onsubmit="return false;">
 
-                        <!-- 1. بطاقة رقم الكرت المستقلة (Card Input Card) -->
+                        <!-- 1. حاوية اختيار السرعة (Speed Selection Container - ظاهرة فوق حقل إدخال الكرت دائماً) -->
+                        <div class="speed-selection-popdown-container speed-popdown-visible" id="speedSelectionPopdown">
+                            <!-- ترويسة اختيار السرعة -->
+                            <div class="speed-selection-outer-header" style="margin-bottom: 6px;">
+                                <div class="card-section-title-wrap">
+                                    <span class="card-section-icon">
+                                        <svg viewBox="0 0 24 24">
+                                            <path d="M7 2v11h3v9l7-12h-4l4-8z" />
+                                        </svg>
+                                    </span>
+                                    <span class="card-section-title">أختر سرعتك المناسبة</span>
+                                </div>
+                                <span class="selected-speed-badge" id="selectedSpeedDisplay">سرعة أفتراضية</span>
+                            </div>
+
+                            <!-- بطاقة شريط السرعات المتحرك -->
+                            <div class="app-card speed-selection-card">
+                                <!-- Native select strictly linked with MikroTik system & scripts (name="domain" & speed-field) -->
+                                <select id="speed" name="domain" speed-field style="display: none;">
+                                    <option value="" disabled hidden selected>أختيار سرعة الإنترنت</option>
+                                </select>
+
+                                <!-- Horizontal Moving / Scrollable Speeds Carousel Strip -->
+                                <div class="speed-slider-wrapper">
+                                    <div class="speed-pills-row" id="speedPillsRow" role="radiogroup"
+                                        aria-label="شريط تحديد سرعة الإنترنت">
+                                        <!-- يتم بناء أزرار السرعة ديناميكياً من config.js -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 2. بطاقة رقم الكرت المستقلة (Card Input Card) -->
                         <div class="app-card login-input-card">
                             <div class="input-card-header">
                                 <span class="input-label-text">أدخل رقم الكرت الذي لديك للاتصال فوراً بالإنترنت</span>
@@ -849,38 +765,6 @@
                             </div>
                         </div>
 
-                        <!-- 2. حاوية اختيار السرعة المنبثقة للأسفل (Speed Popdown Container - يظهر فقط للكروت العادية) -->
-                        <div class="speed-selection-popdown-container" id="speedSelectionPopdown">
-                            <!-- ترويسة اختيار السرعة -->
-                            <div class="speed-selection-outer-header" style="margin-bottom: 6px;">
-                                <div class="card-section-title-wrap">
-                                    <span class="card-section-icon">
-                                        <svg viewBox="0 0 24 24">
-                                            <path d="M7 2v11h3v9l7-12h-4l4-8z" />
-                                        </svg>
-                                    </span>
-                                    <span class="card-section-title">أختر سرعتك المناسبة</span>
-                                </div>
-                                <span class="selected-speed-badge" id="selectedSpeedDisplay">سرعة أفتراضية</span>
-                            </div>
-
-                            <!-- بطاقة شريط السرعات المتحرك -->
-                            <div class="app-card speed-selection-card">
-                                <!-- Native select strictly linked with MikroTik system & scripts (name="domain" & speed-field) -->
-                                <select id="speed" name="domain" speed-field style="display: none;">
-                                    <option value="" disabled hidden selected>أختيار سرعة الإنترنت</option>
-                                </select>
-
-                                <!-- Horizontal Moving / Scrollable Speeds Carousel Strip -->
-                                <div class="speed-slider-wrapper">
-                                    <div class="speed-pills-row" id="speedPillsRow" role="radiogroup"
-                                        aria-label="شريط تحديد سرعة الإنترنت">
-                                        <!-- يتم بناء أزرار السرعة ديناميكياً من config.js -->
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
                         <!-- 3. زر تسجيل الدخول المنفصل والمستقل (Standalone Submit Button) -->
                         <div class="login-submit-wrapper">
                             <button class="button login-submit login-submit-btn" parent-id="status" enable-hot-cookie
@@ -893,7 +777,7 @@
                         </div>
 
                         <!-- 4. بطاقة إيقاف التحديثات والمتجر المستقلة (Updates Blocker Card) -->
-                        <div class="app-card updates-toggle-card">
+                        <div class="app-card updates-toggle-card" id="updatesLoginCard" data-updates-blocker>
                             <div class="toggle-container-modern">
                                 <div class="toggle-info">
                                     <span class="toggle-title">
@@ -1491,7 +1375,7 @@
                         </div>
 
                         <!-- Updates & App Store Blocker Toggle (Identical to Login Screen) -->
-                        <div class="toggle-container-modern" style="margin: 12px 0;">
+                        <div class="toggle-container-modern status-updates-card" id="statusUpdatesCard" data-updates-blocker style="margin: 12px 0;">
                             <div class="toggle-info">
                                 <span class="toggle-title">
                                     <svg viewBox="0 0 24 24" class="section-icon">
@@ -2417,10 +2301,13 @@
                 void modal.offsetWidth;
                 modal.classList.add('active');
 
-                // Instant sync for dynamic modal contents (price table, sales points, etc.)
-                if (modal.id === 'price' || modal.id === 'sell-point' || modal.id === 'offers-modal') {
+                // Instant sync for dynamic modal contents (price table, sales points, status screen, etc.)
+                if (modal.id === 'price' || modal.id === 'sell-point' || modal.id === 'offers-modal' || modal.id === 'status' || modal.id === 'status-speed-modal') {
                     if (typeof syncAllSiteConfigs === 'function') {
                         syncAllSiteConfigs();
+                    }
+                    if (modal.id === 'status-speed-modal' && typeof window.syncStatusScreenInitialValues === 'function') {
+                        window.syncStatusScreenInitialValues();
                     }
                 }
 
@@ -2641,16 +2528,51 @@
                 '2M/4M': 'سرعة اقتصادية',
                 '2M/5M': 'سرعة عادية',
                 '2M/7M': 'سرعة متوسطة',
+                '3M/7M': 'سرعة متوسطة',
                 '2M/8M': 'سرعة عالية',
                 '2M/16M': 'سرعة عالية جدا',
                 '2M/20M': 'سرعة خارقة'
             };
 
             function getSpeedLabel(val) {
+                if (!val || val === 'سرعة الكرت' || val === '$(domain)' || val === 's' || val === '$(domain)s') {
+                    if (window.siteConfig && Array.isArray(window.siteConfig.speedOptions)) {
+                        const def = window.siteConfig.speedOptions.find(s => s.selected || s.isDefault);
+                        if (def) return def.label || def.name;
+                    }
+                    return 'سرعة أفتراضية';
+                }
+
+                // Check direct match
                 if (window.speedNameMap && window.speedNameMap[val]) {
                     return window.speedNameMap[val];
                 }
-                return defaultSpeedMap[val] || val;
+                if (defaultSpeedMap[val]) {
+                    return defaultSpeedMap[val];
+                }
+
+                // Try clean speed
+                const clean = (typeof extractMikrotikSpeed === 'function') ? extractMikrotikSpeed(val) : val.replace(/^@/, '').replace(/\|$/, '').split('_')[0];
+                if (window.speedNameMap) {
+                    if (window.speedNameMap[clean]) return window.speedNameMap[clean];
+                    if (window.speedNameMap['@' + clean + '|']) return window.speedNameMap['@' + clean + '|'];
+                    if (window.speedNameMap[clean + '|']) return window.speedNameMap[clean + '|'];
+                }
+                if (defaultSpeedMap[clean]) {
+                    return defaultSpeedMap[clean];
+                }
+
+                // Check speedOptions in config
+                if (window.siteConfig && Array.isArray(window.siteConfig.speedOptions)) {
+                    const match = window.siteConfig.speedOptions.find(s => {
+                        const optVal = s.value || '';
+                        const optClean = (typeof extractMikrotikSpeed === 'function') ? extractMikrotikSpeed(optVal) : optVal.replace(/^@/, '').replace(/\|$/, '').split('_')[0];
+                        return optVal === val || optClean.toLowerCase() === clean.toLowerCase();
+                    });
+                    if (match) return match.label || match.name;
+                }
+
+                return val;
             }
 
             function updateSpeedSelection(val) {
@@ -2786,6 +2708,15 @@
             const updateStatusText = document.getElementById('updateStatusText');
             if (chUpdate && updateStatusText) {
                 const updateToggleState = () => {
+                    const cfg = window.siteConfig || {};
+                    const isFeatureEnabled = cfg.updatesBlockerV === true || (cfg.updatesBlockerV !== false && cfg["enable-updates-blocker"] !== 0 && cfg["enable-updates-blocker"] !== false);
+                    if (!isFeatureEnabled) {
+                        chUpdate.checked = false;
+                        updateStatusText.textContent = 'متوقف';
+                        updateStatusText.classList.remove('active');
+                        try { localStorage.setItem('hotspot_updates', '0'); } catch (e) {}
+                        return;
+                    }
                     const isChecked = chUpdate.checked;
                     if (isChecked) {
                         updateStatusText.textContent = 'مفعل';
@@ -2854,10 +2785,12 @@
                             if (statusSpeedTriggerText) {
                                 statusSpeedTriggerText.textContent = friendlyName;
                             }
+                            const cleanTxt = (typeof extractMikrotikSpeed === 'function') ? extractMikrotikSpeed(txt) : txt.replace(/^@/, '').replace(/\|$/, '').split('_')[0];
                             statusSpeedCards.forEach(card => {
                                 const cardTitle = card.getAttribute('data-speed-title') || '';
                                 const cardVal = card.getAttribute('data-status-speed') || '';
-                                if (cardTitle === friendlyName || cardVal === txt) {
+                                const cleanCardVal = (typeof extractMikrotikSpeed === 'function') ? extractMikrotikSpeed(cardVal) : cardVal.replace(/^@/, '').replace(/\|$/, '').split('_')[0];
+                                if (cardTitle === friendlyName || cardVal === txt || (cleanTxt && cleanCardVal && cleanCardVal.toLowerCase() === cleanTxt.toLowerCase())) {
                                     card.classList.add('active');
                                 } else {
                                     card.classList.remove('active');
@@ -2881,6 +2814,14 @@
             if (statusChupdate && statusUpdateStatusText) {
                 let isSyncing = false;
                 const updateStatusToggleState = (triggerChange = false) => {
+                    const cfg = window.siteConfig || {};
+                    const isFeatureEnabled = cfg.updatesBlockerV === true || (cfg.updatesBlockerV !== false && cfg["enable-updates-blocker"] !== 0 && cfg["enable-updates-blocker"] !== false);
+                    if (!isFeatureEnabled) {
+                        statusChupdate.checked = false;
+                        statusUpdateStatusText.textContent = 'متوقف';
+                        statusUpdateStatusText.classList.remove('active');
+                        return;
+                    }
                     if (isSyncing) return;
                     const isChecked = statusChupdate.checked;
 
@@ -2914,6 +2855,14 @@
                 // Live Sync with MikroTik status query updates
                 if (updateSpan) {
                     const syncFromMikrotik = () => {
+                        const cfg = window.siteConfig || {};
+                        const isFeatureEnabled = cfg.updatesBlockerV === true || (cfg.updatesBlockerV !== false && cfg["enable-updates-blocker"] !== 0 && cfg["enable-updates-blocker"] !== false);
+                        if (!isFeatureEnabled) {
+                            statusChupdate.checked = false;
+                            statusUpdateStatusText.textContent = 'متوقف';
+                            statusUpdateStatusText.classList.remove('active');
+                            return;
+                        }
                         if (window._isTogglingUpdateBlocker) return;
                         const text = (updateSpan.innerText || updateSpan.textContent || '').trim();
                         isSyncing = true;
@@ -2939,11 +2888,24 @@
             window.syncStatusScreenInitialValues = function () {
                 // 1. Synchronize Speed
                 let friendlySpeed = '';
-                const selectedSpeedDisplay = document.getElementById('selectedSpeedDisplay');
-                if (selectedSpeedDisplay && selectedSpeedDisplay.textContent && selectedSpeedDisplay.textContent.trim()) {
-                    const txt = selectedSpeedDisplay.textContent.trim();
-                    if (!txt.includes('🔒') && txt !== 'أختر سرعة الإنترنت') {
-                        friendlySpeed = txt;
+                const sspeedSpan = document.getElementById('sspeed');
+                const statusSpeedTriggerText = document.getElementById('statusSpeedTriggerText');
+                
+                // If sspeed already has a resolved speed value from MikroTik status query
+                if (sspeedSpan) {
+                    const currentTxt = (sspeedSpan.textContent || sspeedSpan.innerText || '').trim();
+                    if (currentTxt && currentTxt !== 'سرعة الكرت' && currentTxt !== '$(domain)') {
+                        friendlySpeed = getSpeedLabel(currentTxt);
+                    }
+                }
+
+                if (!friendlySpeed) {
+                    const selectedSpeedDisplay = document.getElementById('selectedSpeedDisplay');
+                    if (selectedSpeedDisplay && selectedSpeedDisplay.textContent && selectedSpeedDisplay.textContent.trim()) {
+                        const txt = selectedSpeedDisplay.textContent.trim();
+                        if (!txt.includes('🔒') && txt !== 'أختر سرعة الإنترنت') {
+                            friendlySpeed = txt;
+                        }
                     }
                 }
                 if (!friendlySpeed) {
@@ -2977,8 +2939,6 @@
                 }
                 if (!friendlySpeed) friendlySpeed = 'سرعة أفتراضية';
 
-                const sspeedSpan = document.getElementById('sspeed');
-                const statusSpeedTriggerText = document.getElementById('statusSpeedTriggerText');
                 if (sspeedSpan) {
                     sspeedSpan.textContent = friendlySpeed;
                 }
@@ -2991,7 +2951,9 @@
                 statusSpeedCards.forEach(card => {
                     const cardTitle = card.getAttribute('data-speed-title') || '';
                     const cardVal = card.getAttribute('data-status-speed') || '';
-                    if (cardTitle === friendlySpeed || (cardVal && friendlySpeed.includes(cardVal))) {
+                    const cleanCardVal = (typeof extractMikrotikSpeed === 'function') ? extractMikrotikSpeed(cardVal) : cardVal.replace(/^@/, '').replace(/\|$/, '').split('_')[0];
+                    const cardLabel = getSpeedLabel(cardVal);
+                    if (cardTitle === friendlySpeed || cardLabel === friendlySpeed || cardVal === friendlySpeed || (cardVal && friendlySpeed.includes(cardVal)) || (cleanCardVal && friendlySpeed.includes(cleanCardVal))) {
                         card.classList.add('active');
                     } else {
                         card.classList.remove('active');
@@ -2999,30 +2961,37 @@
                 });
 
                 // 2. Synchronize Updates Blocker Toggle
+                const cfg = window.siteConfig || {};
+                const isFeatureEnabled = cfg.updatesBlockerV === true || (cfg.updatesBlockerV !== false && cfg["enable-updates-blocker"] !== 0 && cfg["enable-updates-blocker"] !== false);
                 const chupdate = document.getElementById('chupdate');
                 let isBlocked = false;
-                if (chupdate && chupdate.checked) {
-                    isBlocked = true;
-                } else {
-                    try {
-                        const savedUp = localStorage.getItem('hotspot_updates');
-                        if (savedUp === '1') {
-                            isBlocked = true;
-                        } else if (savedUp === '0') {
-                            isBlocked = false;
-                        } else {
-                            const savedSpeed = localStorage.getItem('hotspot_speed') || '';
-                            if (savedSpeed.includes('_Uoff') || savedSpeed.includes('Uoff') || savedSpeed.includes('*yes**')) {
+                if (isFeatureEnabled) {
+                    if (chupdate && chupdate.checked) {
+                        isBlocked = true;
+                    } else {
+                        try {
+                            const savedUp = localStorage.getItem('hotspot_updates');
+                            if (savedUp === '1') {
+                                isBlocked = true;
+                            } else if (savedUp === '0') {
+                                isBlocked = false;
+                            } else {
+                                const savedSpeed = localStorage.getItem('hotspot_speed') || '';
+                                if (savedSpeed.includes('_Uoff') || savedSpeed.includes('Uoff') || savedSpeed.includes('*yes**')) {
+                                    isBlocked = true;
+                                }
+                            }
+                        } catch (e) {}
+                        if (!isBlocked && typeof getLoginCardCookie === 'function') {
+                            const cObj = getLoginCardCookie();
+                            if (cObj && cObj.speed && (cObj.speed.includes('_Uoff') || cObj.speed.includes('*yes**'))) {
                                 isBlocked = true;
                             }
                         }
-                    } catch (e) {}
-                    if (!isBlocked && typeof getLoginCardCookie === 'function') {
-                        const cObj = getLoginCardCookie();
-                        if (cObj && cObj.speed && (cObj.speed.includes('_Uoff') || cObj.speed.includes('*yes**'))) {
-                            isBlocked = true;
-                        }
                     }
+                } else {
+                    isBlocked = false;
+                    if (chupdate) chupdate.checked = false;
                 }
 
                 const statusChupdate = document.getElementById('statusChupdate');
@@ -3174,9 +3143,9 @@
                         el.href = config.moba.trim();
                         const span = el.querySelector('span');
                         if (span) span.textContent = 'البث المباشر';
-                        el.style.display = 'flex';
+                        el.style.setProperty('display', 'flex', 'important');
                     } else {
-                        el.style.display = 'none';
+                        el.style.setProperty('display', 'none', 'important');
                     }
                 });
 
@@ -3185,17 +3154,17 @@
                         el.href = config.estr.trim();
                         const span = el.querySelector('span');
                         if (span) span.textContent = 'الإستراحة';
-                        el.style.display = 'flex';
+                        el.style.setProperty('display', 'flex', 'important');
                     } else {
-                        el.style.display = 'none';
+                        el.style.setProperty('display', 'none', 'important');
                     }
                 });
 
                 document.querySelectorAll('.entertainment-links').forEach(container => {
                     if (isMobaEnabled || isEstrEnabled) {
-                        container.style.display = 'flex';
+                        container.style.setProperty('display', 'flex', 'important');
                     } else {
-                        container.style.display = 'none';
+                        container.style.setProperty('display', 'none', 'important');
                     }
                 });
 
@@ -3277,6 +3246,34 @@
                 } else {
                     var quickPrev = document.getElementById('quickPreviousCardBtn');
                     if (quickPrev) quickPrev.style.display = '';
+                }
+
+                // 10. Sync Updates Blocker Strip Visibility & Logic with window.siteConfig (updatesBlockerV & enable-updates-blocker)
+                const isUpdatesEnabled = config.updatesBlockerV === true || (config.updatesBlockerV !== false && config["enable-updates-blocker"] !== 0 && config["enable-updates-blocker"] !== false);
+                const loginUpdatesCard = document.getElementById('updatesLoginCard');
+                const statusUpdatesCard = document.getElementById('statusUpdatesCard');
+                const allUpdatesStrips = document.querySelectorAll('#updatesLoginCard, #statusUpdatesCard, .updates-toggle-card, .status-updates-card, [data-updates-blocker]');
+
+                if (isUpdatesEnabled) {
+                    if (loginUpdatesCard) loginUpdatesCard.style.setProperty('display', 'block', 'important');
+                    if (statusUpdatesCard) statusUpdatesCard.style.setProperty('display', 'flex', 'important');
+                    allUpdatesStrips.forEach(s => {
+                        if (s !== loginUpdatesCard && s !== statusUpdatesCard) {
+                            s.style.setProperty('display', 'flex', 'important');
+                        }
+                    });
+                } else {
+                    allUpdatesStrips.forEach(s => {
+                        s.style.setProperty('display', 'none', 'important');
+                    });
+                    const chUp = document.getElementById('chupdate');
+                    const stChUp = document.getElementById('statusChupdate');
+                    if (chUp) chUp.checked = false;
+                    if (stChUp) stChUp.checked = false;
+                    const upTxt = document.getElementById('updateStatusText');
+                    const stUpTxt = document.getElementById('statusUpdateStatusText');
+                    if (upTxt) { upTxt.textContent = 'متوقف'; upTxt.classList.remove('active'); }
+                    if (stUpTxt) { stUpTxt.textContent = 'متوقف'; stUpTxt.classList.remove('active'); }
                 }
 
                 if (typeof checkIsBlocked === 'function') {
@@ -3407,116 +3404,62 @@
             }
 
             // =========================================================================
-            // 5. FIXED SPEED CARDS AUTO-DETECTION & LOCKING (بادئات الكروت ذات السرعة الثابتة)
+            // 5. SPEED SELECTOR - PERMANENT VISIBILITY FOR ALL CARDS
+            // (إلغاء حظر الكروت 2 و 3 وظهور أزرار السرعات دائماً لجميع الكروت)
             // =========================================================================
             window.checkCardHasFixedSpeed = function (cardNumber) {
-                if (!cardNumber || typeof cardNumber !== 'string') return false;
-                const cleanCard = cardNumber.trim();
-                if (cleanCard.length === 0) return false;
-                const prefixes = (window.siteConfig && Array.isArray(window.siteConfig.fixedSpeedCardPrefixes))
-                    ? window.siteConfig.fixedSpeedCardPrefixes
-                    : ['2', '3'];
-                return prefixes.some(p => cleanCard.startsWith(p));
+                // Disabled: All cards can select speeds freely without restrictions
+                return false;
             };
 
             window.applySpeedLockForCard = function (cardNumber) {
-                const cleanCard = (cardNumber || '').trim();
                 const popdownContainer = document.getElementById('speedSelectionPopdown');
-                const isFixed = window.checkCardHasFixedSpeed(cleanCard);
                 const speedCard = document.querySelector('.speed-selection-card');
                 const speedOuterHeader = document.querySelector('.speed-selection-outer-header');
                 const speedSel = document.getElementById('speed');
                 const speedDisp = document.getElementById('selectedSpeedDisplay');
                 const pills = document.querySelectorAll('#speedPillsRow .speed-pill-btn');
-                const modalCards = document.querySelectorAll('#speedModalList .speed-card-option');
 
-                if (cleanCard.length === 0) {
-                    // Empty input: keep speed selector hidden
-                    if (popdownContainer) popdownContainer.classList.remove('speed-popdown-visible');
-                    if (speedCard) speedCard.classList.remove('speed-locked-fixed');
-                    if (speedOuterHeader) speedOuterHeader.classList.remove('speed-locked-fixed');
-                } else if (isFixed) {
-                    // Card starts with 2 or 3 (Fixed speed card): HIDE speed selector and set empty domain
-                    if (popdownContainer) popdownContainer.classList.remove('speed-popdown-visible');
-                    if (speedCard) speedCard.classList.add('speed-locked-fixed');
-                    if (speedOuterHeader) speedOuterHeader.classList.add('speed-locked-fixed');
-                    if (speedSel) speedSel.value = '';
-                    if (speedDisp) {
-                        speedDisp.textContent = '🔒 سرعة الكرت الأصلية (المايكروتك)';
-                        speedDisp.classList.add('speed-locked-badge');
-                    }
-                    pills.forEach(p => p.classList.remove('active'));
-                    modalCards.forEach(c => c.classList.remove('active'));
-                } else {
-                    // Normal card (does NOT start with 2 or 3): POP DOWN speed selector smoothly!
-                    if (popdownContainer) popdownContainer.classList.add('speed-popdown-visible');
-                    if (speedCard) speedCard.classList.remove('speed-locked-fixed');
-                    if (speedOuterHeader) speedOuterHeader.classList.remove('speed-locked-fixed');
-                    if (speedDisp) speedDisp.classList.remove('speed-locked-badge');
+                // أزرار السرعات ظاهرة ومتاحة دائماً لكافة الكروت
+                if (popdownContainer) {
+                    popdownContainer.classList.add('speed-popdown-visible');
+                    popdownContainer.style.removeProperty('display');
+                }
+                if (speedCard) speedCard.classList.remove('speed-locked-fixed');
+                if (speedOuterHeader) speedOuterHeader.classList.remove('speed-locked-fixed');
+                if (speedDisp) speedDisp.classList.remove('speed-locked-badge');
 
-                    const activePill = document.querySelector('#speedPillsRow .speed-pill-btn.active');
-                    if (!activePill && pills.length > 0) {
-                        const speeds = (window.siteConfig && window.siteConfig.speedOptions) || [];
-                        const def = speeds.find(s => s.selected || s.isDefault) || speeds[0];
-                        if (def) {
-                            const matchPill = document.querySelector(`#speedPillsRow .speed-pill-btn[data-speed="${def.value}"]`) || pills[0];
-                            if (matchPill) matchPill.classList.add('active');
-                            if (speedSel) speedSel.value = def.value;
-                            if (speedDisp) speedDisp.textContent = def.label || def.name;
-                        }
-                    } else if (activePill) {
-                        const val = activePill.getAttribute('data-speed');
-                        const title = activePill.getAttribute('data-speed-title');
-                        if (speedSel) speedSel.value = val;
-                        if (speedDisp) speedDisp.textContent = title;
+                const activePill = document.querySelector('#speedPillsRow .speed-pill-btn.active');
+                if (!activePill && pills.length > 0) {
+                    const speeds = (window.siteConfig && window.siteConfig.speedOptions) || [];
+                    const def = speeds.find(s => s.selected || s.isDefault) || speeds[0];
+                    if (def) {
+                        const matchPill = document.querySelector(`#speedPillsRow .speed-pill-btn[data-speed="${def.value}"]`) || pills[0];
+                        if (matchPill) matchPill.classList.add('active');
+                        if (speedSel) speedSel.value = def.value;
+                        if (speedDisp) speedDisp.textContent = def.label || def.name;
                     }
+                } else if (activePill) {
+                    const val = activePill.getAttribute('data-speed');
+                    const title = activePill.getAttribute('data-speed-title');
+                    if (speedSel) speedSel.value = val;
+                    if (speedDisp) speedDisp.textContent = title;
                 }
             };
 
             window.applyStatusScreenFixedSpeedLock = function (userStr) {
-                var loggedInUser = (userStr && typeof userStr === 'string' ? userStr : '') ||
-                    (typeof un !== 'undefined' && un && un.username ? un.username : '') ||
-                    localStorage.getItem('last_user_card') ||
-                    localStorage.getItem('hotspot_username') ||
-                    localStorage.getItem('username') ||
-                    (typeof getLoginCardCookie === 'function' && getLoginCardCookie() ? getLoginCardCookie().username : '') ||
-                    (document.login && document.login.querySelector('input[username-field]') ? document.login.querySelector('input[username-field]').value : '') ||
-                    (document.getElementById('user') ? document.getElementById('user').innerText : '') ||
-                    (document.getElementById('username') ? document.getElementById('username').innerText : '') || '';
-
-                loggedInUser = (loggedInUser || '').trim();
-                var isFixed = window.checkCardHasFixedSpeed(loggedInUser);
+                // إتاحة خيارات تغيير السرعة في شاشة الحالة دائماً لكافة الكروت
                 var statusSpeedContainer = document.getElementById('statusSpeedChangeContainer') || document.querySelector('#status .statusdiv');
                 var statusTrigger = document.getElementById('statusSpeedTrigger');
-                var statusTriggerText = document.getElementById('statusSpeedTriggerText');
-                var sspeedSpan = document.getElementById('sspeed');
 
                 if (statusSpeedContainer) {
-                    if (isFixed) {
-                        statusSpeedContainer.style.setProperty('display', 'none', 'important');
-                        statusSpeedContainer.classList.add('speed-locked-fixed');
-                    } else {
-                        statusSpeedContainer.style.removeProperty('display');
-                        statusSpeedContainer.classList.remove('speed-locked-fixed');
-                    }
+                    statusSpeedContainer.style.removeProperty('display');
+                    statusSpeedContainer.classList.remove('speed-locked-fixed');
                 }
 
-                if (isFixed) {
-                    if (statusTrigger) {
-                        statusTrigger.classList.add('status-speed-locked');
-                        statusTrigger.setAttribute('title', 'سرعة هذا الكرت محددة وثابتة من المايكروتك ولا يمكن تغييرها');
-                    }
-                    if (statusTriggerText) {
-                        statusTriggerText.textContent = '🔒 سرعة الكرت ثابتة ومحددة من المايكروتك';
-                    }
-                    if (sspeedSpan) {
-                        sspeedSpan.textContent = 'سرعة الكرت الأصلية (البروفايل)';
-                    }
-                } else {
-                    if (statusTrigger) {
-                        statusTrigger.classList.remove('status-speed-locked');
-                        statusTrigger.removeAttribute('title');
-                    }
+                if (statusTrigger) {
+                    statusTrigger.classList.remove('status-speed-locked');
+                    statusTrigger.removeAttribute('title');
                 }
             };
 
@@ -3537,9 +3480,7 @@
                 });
 
                 // Check initial value
-                if (usernameInputField.value) {
-                    handleCardInput();
-                }
+                handleCardInput();
 
                 const persistCard = function () {
                     const val = usernameInputField.value ? usernameInputField.value.trim() : '';
@@ -3556,16 +3497,12 @@
                 usernameInputField.addEventListener('blur', persistCard);
             }
 
-            // Form submission handling (Ensuring speed domain value is empty for fixed cards)
+            // Form submission handling
             if (document.login) {
                 document.login.addEventListener('submit', function () {
                     const uInput = document.login.querySelector('input[username-field]') || document.querySelector('input[name="username"]');
                     if (uInput && uInput.value && uInput.value.trim().length > 0) {
                         const val = uInput.value.trim();
-                        if (window.checkCardHasFixedSpeed(val)) {
-                            const speedSel = document.getElementById('speed');
-                            if (speedSel) speedSel.value = '';
-                        }
                         try {
                             localStorage.setItem('last_user_card', val);
                             if (typeof saveValueToCookie === 'function') {
@@ -3987,54 +3924,6 @@
                 window._topToastTimer = setTimeout(function() {
                     if (toast) toast.classList.remove('show');
                 }, 3000);
-            };
-
-            // دالة نسخ رقم الإيداع مع التغذية الراجعة البصرية
-            window.copyDepositNumber = function() {
-                var phone = '770770409';
-                var btn = document.getElementById('depositCopyBtn');
-                var label = document.getElementById('depositCopyLabel');
-                var icon = document.getElementById('depositCopyIcon');
-
-                function notifyCopied() {
-                    if (btn) btn.classList.add('copied');
-                    if (label) label.textContent = 'تم النسخ بنجاح ✓';
-                    if (icon) {
-                        icon.innerHTML = '<path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>';
-                    }
-                    window.showTopNotification('تم نسخ رقم الإيداع بنجاح: ' + phone, 'success');
-                    setTimeout(function() {
-                        if (btn) btn.classList.remove('copied');
-                        if (label) label.textContent = 'نسخ الرقم';
-                        if (icon) {
-                            icon.innerHTML = '<path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>';
-                        }
-                    }, 2500);
-                }
-
-                if (navigator.clipboard && navigator.clipboard.writeText) {
-                    navigator.clipboard.writeText(phone).then(notifyCopied).catch(function() {
-                        fallbackCopy(phone);
-                    });
-                } else {
-                    fallbackCopy(phone);
-                }
-
-                function fallbackCopy(text) {
-                    var ta = document.createElement('textarea');
-                    ta.value = text;
-                    ta.style.position = 'fixed';
-                    ta.style.left = '-9999px';
-                    ta.style.top = '0';
-                    document.body.appendChild(ta);
-                    ta.focus();
-                    ta.select();
-                    try {
-                        document.execCommand('copy');
-                        notifyCopied();
-                    } catch (e) {}
-                    document.body.removeChild(ta);
-                }
             };
         })();
     </script>

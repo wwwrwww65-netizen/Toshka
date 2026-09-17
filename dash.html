@@ -1175,6 +1175,24 @@
                             <div class="form-hint"><i class="fas fa-info-circle" style="color: #dfab52;"></i> إذا تُرك فارغاً؛ سيفتح زر القرآن قارئ المصحف الشريف المدمج بالشبكة تلقائياً بدون رصيد</div>
                         </div>
 
+                        <!-- Updates & App Store Blocker Strip Toggle -->
+                        <div class="feature-toggle-card" style="margin-top: 24px; border-color: rgba(59, 130, 246, 0.35);">
+                            <div class="feature-toggle-info">
+                                <div class="feature-toggle-icon" style="color: #60a5fa; background: rgba(59, 130, 246, 0.15);"><i class="fas fa-shield-alt"></i></div>
+                                <div>
+                                    <div class="feature-toggle-title">شريط ومفتاح إيقاف التحديثات والمتجر (حفظ الرصيد)</div>
+                                    <div class="feature-toggle-desc">إظهار أو إخفاء شريط ومفتاح إيقاف التحديثات في صفحتي تسجيل الدخول والحالة (Status) والتحكم بعمل الميزة</div>
+                                </div>
+                            </div>
+                            <div class="switch-container">
+                                <span class="status-badge" id="badgeUpdatesBlocker">مفعل</span>
+                                <label class="switch">
+                                    <input type="checkbox" id="updatesBlockerVToggle" onchange="updateUpdatesBlockerToggle(this.checked)">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+
                         <!-- Live Broadcast Toggle & URL -->
                         <div class="feature-toggle-card" style="margin-top: 24px;">
                             <div class="feature-toggle-info">
@@ -1295,24 +1313,16 @@
                             </table>
                         </div>
 
-                        <!-- Fixed Speed Card Prefixes Control -->
-                        <div style="margin-top: 24px; padding: 18px 20px; background: rgba(59, 130, 246, 0.06); border: 1px dashed rgba(59, 130, 246, 0.35); border-radius: var(--radius-md);">
-                            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 10px;">
-                                <div style="display: flex; align-items: center; gap: 10px;">
-                                    <div style="width: 36px; height: 36px; border-radius: 8px; background: rgba(59, 130, 246, 0.2); color: #60a5fa; display: flex; align-items: center; justify-content: center; font-size: 1.1rem;">
-                                        <i class="fas fa-lock"></i>
-                                    </div>
-                                    <div>
-                                        <div style="font-weight: 700; color: #fff; font-size: 0.98rem;">بادئات الكروت ذات السرعة الثابتة والمفتوحة (Fixed Speed Cards)</div>
-                                        <div style="color: var(--text-muted); font-size: 0.83rem;">الكروت التي تبدأ بهذه الأرقام يتم قفل اختيار السرعة لها تلقائياً واستخدام سرعة المايكروتك الأصلية</div>
-                                    </div>
+                        <!-- Permanent Speed Selector Indicator -->
+                        <div style="margin-top: 24px; padding: 16px 20px; background: rgba(16, 185, 129, 0.08); border: 1px dashed rgba(16, 185, 129, 0.35); border-radius: var(--radius-md);">
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <div style="width: 36px; height: 36px; border-radius: 8px; background: rgba(16, 185, 129, 0.2); color: #10b981; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0;">
+                                    <i class="fas fa-check-circle"></i>
                                 </div>
-                            </div>
-
-                            <div class="form-group" style="margin-bottom: 0;">
-                                <label class="form-label" for="fixedSpeedPrefixesInput"><i class="fas fa-hashtag"></i> أرقام بداية الكروت (مفصولة بفاصلة)</label>
-                                <input type="text" class="form-control" id="fixedSpeedPrefixesInput" placeholder="مثال: 2, 3" oninput="updateFixedSpeedPrefixes(this.value)">
-                                <div class="form-hint" style="color: #93c5fd;"><i class="fas fa-info-circle"></i> عند إدخال المستخدم كرت يبدأ بـ <strong>2</strong> أو <strong>3</strong> يتم تعطيل شريط السرعات وتطبيق سرعة البروفايل المعينة في سيرفر المايكروتك.</div>
+                                <div>
+                                    <div style="font-weight: 700; color: #fff; font-size: 0.96rem;">أزرار السرعة ظاهرة ودائمة لجميع الكروت</div>
+                                    <div style="color: var(--text-muted); font-size: 0.83rem;">تم إلغاء حظر وإخفاء السرعات عن كروت 2 أو 3، وأصبحت أزرار السرعات ظاهرة ومتاحة دائماً لكافة الكروت وبشكل دائم.</div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1605,6 +1615,17 @@
                         <span style="font-size: 0.8rem; background: #dfab52; color: #0f172a; padding: 4px 10px; border-radius: 8px; font-weight: 700;">قراءة</span>
                     </div>
 
+                    <div id="previewUpdatesBtn" style="display: none; align-items: center; justify-content: space-between; padding: 12px 16px; border-radius: 12px; background: rgba(59, 130, 246, 0.12); border: 1px solid rgba(59, 130, 246, 0.35); color: #93c5fd; font-weight: 700; margin-top: 10px;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <i class="fas fa-shield-alt" style="font-size: 1.25rem; color: #60a5fa;"></i>
+                            <div>
+                                <div style="font-size: 0.95rem; color: #fff;">إيقاف التحديثات والمتجر <span style="font-size: 0.72rem; background: #2563eb; color: #fff; padding: 1px 6px; border-radius: 10px; margin-right: 4px; font-weight: 800;">توفير الرصيد</span></div>
+                                <div style="font-size: 0.75rem; color: #94a3b8; font-weight: normal;">حظر استهلاك الرصيد في الخلفية</div>
+                            </div>
+                        </div>
+                        <span style="font-size: 0.8rem; background: #2563eb; color: #fff; padding: 4px 10px; border-radius: 8px; font-weight: 700;">مفعل</span>
+                    </div>
+
                     <div class="preview-entertainment-row" id="previewEntertainmentRow">
                         <div id="previewMobaBtn" class="preview-stream-btn" style="display: none;">
                             <i class="fas fa-tv"></i>
@@ -1746,6 +1767,12 @@
             if (appConfig.mobaV === undefined) appConfig.mobaV = true;
             if (appConfig.quranV === undefined) appConfig.quranV = true;
             if (appConfig.quranUrl === undefined) appConfig.quranUrl = "";
+            if (appConfig.updatesBlockerV === undefined) {
+                appConfig.updatesBlockerV = (appConfig["enable-updates-blocker"] !== undefined) ? Boolean(appConfig["enable-updates-blocker"] !== 0 && appConfig["enable-updates-blocker"] !== false) : true;
+            }
+            if (appConfig["enable-updates-blocker"] === undefined) {
+                appConfig["enable-updates-blocker"] = appConfig.updatesBlockerV ? 1 : 0;
+            }
             if (appConfig.welcomeMessageV === undefined) appConfig.welcomeMessageV = true;
             if (appConfig.erbV === undefined) appConfig.erbV = true;
             if (appConfig.imageV === undefined) appConfig.imageV = true;
@@ -1758,7 +1785,7 @@
             if (appConfig["block-time"] === undefined) appConfig["block-time"] = 5;
             if (appConfig["warn-message"] === undefined) appConfig["warn-message"] = "تبقى لك {{restTryCount}} محاولات قبل أن يتم حظرك لمدة {{blockTime}} دقائق";
             if (!appConfig.fixedSpeedCardPrefixes || !Array.isArray(appConfig.fixedSpeedCardPrefixes)) {
-                appConfig.fixedSpeedCardPrefixes = ["2", "3"];
+                appConfig.fixedSpeedCardPrefixes = [];
             }
             if (!appConfig.supportPhone) appConfig.supportPhone = "770807056";
             if (!appConfig.whatsappPhone) appConfig.whatsappPhone = "967770807056";
@@ -1787,8 +1814,9 @@
             document.getElementById('mobaInput').value = appConfig.moba || '';
             document.getElementById('estrInput').value = appConfig.estr || '';
             document.getElementById('imageCountInput').value = appConfig.imageCount || '0';
+            appConfig.fixedSpeedCardPrefixes = [];
             if (document.getElementById('fixedSpeedPrefixesInput')) {
-                document.getElementById('fixedSpeedPrefixesInput').value = (appConfig.fixedSpeedCardPrefixes || ["2", "3"]).join(', ');
+                document.getElementById('fixedSpeedPrefixesInput').value = '';
             }
             
             // Offers Modal Fields
@@ -1816,6 +1844,7 @@
 
             // Toggles
             setToggle('quranVToggle', 'badgeQuran', Boolean(appConfig.quranV !== false));
+            setToggle('updatesBlockerVToggle', 'badgeUpdatesBlocker', Boolean(appConfig.updatesBlockerV !== false && appConfig["enable-updates-blocker"] !== 0 && appConfig["enable-updates-blocker"] !== false));
             setToggle('welcomeMessageVToggle', 'badgeWelcome', Boolean(appConfig.welcomeMessageV));
             setToggle('mobaVToggle', 'badgeMoba', Boolean(appConfig.mobaV));
             setToggle('estrVToggle', 'badgeEstr', Boolean(appConfig.estrV));
@@ -1863,6 +1892,18 @@
             }
             saveToCache();
             showToast(`تم ${isChecked ? 'تفعيل' : 'تعطيل'} نظام الحظر بنجاح`, 'info');
+        }
+
+        function updateUpdatesBlockerToggle(isChecked) {
+            appConfig.updatesBlockerV = Boolean(isChecked);
+            appConfig["enable-updates-blocker"] = isChecked ? 1 : 0;
+            const badge = document.getElementById('badgeUpdatesBlocker');
+            if (badge) {
+                badge.textContent = isChecked ? 'مفعل' : 'معطل';
+                badge.className = `status-badge ${isChecked ? 'active' : 'inactive'}`;
+            }
+            saveToCache();
+            showToast(`تم ${isChecked ? 'تفعيل' : 'تعطيل'} شريط إيقاف التحديثات بنجاح`, 'info');
         }
 
         function updateConfigField(key, value) {
@@ -1969,7 +2010,7 @@
         function updateFixedSpeedPrefixes(val) {
             const raw = (val || '').split(',');
             const cleaned = raw.map(s => s.trim()).filter(s => s.length > 0);
-            appConfig.fixedSpeedCardPrefixes = cleaned.length > 0 ? cleaned : ["2", "3"];
+            appConfig.fixedSpeedCardPrefixes = cleaned;
             saveToCache();
         }
 
@@ -2155,20 +2196,23 @@
 
         function openLivePreviewModal() {
             const quranBtn = document.getElementById('previewQuranBtn');
+            const updatesBtn = document.getElementById('previewUpdatesBtn');
             const mobaBtn = document.getElementById('previewMobaBtn');
             const estrBtn = document.getElementById('previewEstrBtn');
             const emptyMsg = document.getElementById('previewEmptyMsg');
 
             const isQuran = appConfig.quranV !== false;
+            const isUpdates = appConfig.updatesBlockerV !== false && appConfig["enable-updates-blocker"] !== 0 && appConfig["enable-updates-blocker"] !== false;
             const isMoba = Boolean(appConfig.mobaV) && appConfig.moba && appConfig.moba.trim().length > 0;
             const isEstr = Boolean(appConfig.estrV) && appConfig.estr && appConfig.estr.trim().length > 0;
 
             if (quranBtn) quranBtn.style.display = isQuran ? 'flex' : 'none';
+            if (updatesBtn) updatesBtn.style.display = isUpdates ? 'flex' : 'none';
             mobaBtn.style.display = isMoba ? 'flex' : 'none';
             estrBtn.style.display = isEstr ? 'flex' : 'none';
             const entertainmentRow = document.getElementById('previewEntertainmentRow');
             if (entertainmentRow) entertainmentRow.style.display = (isMoba || isEstr) ? 'flex' : 'none';
-            emptyMsg.style.display = (!isQuran && !isMoba && !isEstr) ? 'block' : 'none';
+            emptyMsg.style.display = (!isQuran && !isMoba && !isEstr && !isUpdates) ? 'block' : 'none';
 
             openModal('livePreviewModal');
         }

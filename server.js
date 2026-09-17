@@ -9,6 +9,29 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = 3000;
 
+// Helper to get default speed value from config.js
+function getConfigDefaultSpeed() {
+  try {
+    const configPath = path.join(__dirname, 'config.js');
+    if (fs.existsSync(configPath)) {
+      const content = fs.readFileSync(configPath, 'utf8');
+      const match = content.match(/window\.siteConfig\s*=\s*(\{[\s\S]*?\});/);
+      if (match && match[1]) {
+        const parsed = JSON.parse(match[1]);
+        if (parsed.speedOptions && Array.isArray(parsed.speedOptions) && parsed.speedOptions.length > 0) {
+          const def = parsed.speedOptions.find(s => s.selected || s.isDefault) || parsed.speedOptions[0];
+          if (def && typeof def.value === 'string') {
+            return def.value;
+          }
+        }
+      }
+    }
+  } catch (err) {
+    console.error('Error reading default speed from config.js:', err);
+  }
+  return '';
+}
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -17,7 +40,7 @@ app.use(express.static(__dirname));
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', app: 'alawla-hotspot' });
+  res.json({ status: 'ok', app: 'toshka-hotspot' });
 });
 
 // Notifications & announcements public content mock endpoint
@@ -138,7 +161,8 @@ app.all('/login', (req, res) => {
   }
 
   // Any other card succeeds in simulation!
-  const domain = (req.query.domain || req.body?.domain || '3M/7M_Uon').trim();
+  const defaultDomain = getConfigDefaultSpeed();
+  const domain = (req.query.domain || req.body?.domain || defaultDomain || '').trim();
   simulatedSession = {
     logged_in: true,
     username: username,
@@ -173,7 +197,8 @@ app.all('/login', (req, res) => {
 app.all('/status', (req, res) => {
   const isAjax = req.headers.accept?.includes('application/json') || req.query.var !== undefined || req.xhr;
   const username = req.query.username || simulatedSession.username || "770807777";
-  const currentSpeed = req.query.domain || simulatedSession.domain || "3M/7M_Uon";
+  const defaultDomain = getConfigDefaultSpeed();
+  const currentSpeed = req.query.domain || simulatedSession.domain || defaultDomain || "";
 
   if (isAjax) {
     res.setHeader('Content-Type', 'application/json');

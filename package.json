@@ -1,7 +1,7 @@
 {
-  "name": "alawla-hotspot",
+  "name": "toshka-hotspot",
   "version": "1.0.0",
-  "description": "شبكة الاولى نت - بوابة الهوتسبوت",
+  "description": "شبكة توشكا نت - بوابة الهوتسبوت",
   "type": "module",
   "scripts": {
     "dev": "node server.js",
