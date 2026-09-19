@@ -3,10 +3,10 @@
 
 <head>
     <meta charset="UTF-8">
-    <title data-network-name>شبكة طوفان نت اللاسلكية</title>
-    <meta name="description" content="بوابة تسجيل الدخول وشبكة طوفان نت للاتصالات والإنترنت اللاسلكي">
-    <meta property="og:title" content="شبكة طوفان نت">
-    <meta property="og:description" content="بوابة تسجيل الدخول وشبكة طوفان نت للاتصالات والإنترنت اللاسلكي">
+    <title data-network-name>شبكة توشكا نت اللاسلكية</title>
+    <meta name="description" content="بوابة تسجيل الدخول وشبكة توشكا نت للاتصالات والإنترنت اللاسلكي">
+    <meta property="og:title" content="شبكة توشكا نت">
+    <meta property="og:description" content="بوابة تسجيل الدخول وشبكة توشكا نت للاتصالات والإنترنت اللاسلكي">
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, shrink-to-fit=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -185,10 +185,40 @@
         textarea,
         [contenteditable="true"],
         .login-input {
+            -webkit-touch-callout: default !important;
             -webkit-user-select: text !important;
             -moz-user-select: text !important;
             -ms-user-select: text !important;
             user-select: text !important;
+        }
+
+        /* 2026 Quick Previous Card Text Button Smooth Transitions & Dynamic Hiding */
+        .prev-card-pill-btn {
+            transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+                        transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+                        max-width 0.24s cubic-bezier(0.4, 0, 0.2, 1),
+                        padding 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+                        margin 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+                        border-color 0.2s ease,
+                        background 0.2s ease,
+                        box-shadow 0.2s ease !important;
+            max-width: 140px;
+            overflow: hidden;
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .prev-card-pill-btn.hidden-by-input {
+            opacity: 0 !important;
+            max-width: 0 !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+            border-width: 0 !important;
+            pointer-events: none !important;
+            transform: scale(0.85) !important;
+            visibility: hidden !important;
         }
 
         img {
@@ -456,21 +486,8 @@
                 <!-- MAIN LOGIN VIEW -->
                 <div class="login" id="login">
 
-                    <!-- 1. بطاقة الشعار والهوية الفاخرة للشبكة -->
+                    <!-- 1. بطاقة الشعار والهوية الفاخرة للشبكة (مطابقة تماماً لتصميم الشيباني نت) -->
                     <div class="app-card aloula-hero-card">
-                        <!-- طبقة شعلات ولهب متصاعدة ومنتشرة عالية الأداء (Pure CSS GPU Embers) -->
-                        <div class="aloula-flame-ambient-layer" aria-hidden="true">
-                            <div class="flame-glow-base"></div>
-                            <div class="flame-ember ember-1"></div>
-                            <div class="flame-ember ember-2"></div>
-                            <div class="flame-ember ember-3"></div>
-                            <div class="flame-ember ember-4"></div>
-                            <div class="flame-ember ember-5"></div>
-                            <div class="flame-ember ember-6"></div>
-                            <div class="flame-ember ember-7"></div>
-                            <div class="flame-ember ember-8"></div>
-                        </div>
-
                         <!-- الخلفية الزخرفية الذهبية الفخمة -->
                         <div class="aloula-bg-glow-layer" aria-hidden="true">
                             <svg class="aloula-bg-waves" viewBox="0 0 400 180" preserveAspectRatio="none">
@@ -753,9 +770,7 @@
                                         <path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z" />
                                     </svg>
                                 </span>
-                                <input name="username" class="login-input" placeholder="ادخل رقم الكرت هنا"
-                                    username-field improve-input autocomplete="off" enterkeyhint="go"
-                                    inputmode="text">
+                                <input name="username" type="text" class="login-input" placeholder="ادخل رقم الكرت هنا" username-field improve-input autocomplete="off" enterkeyhint="go" inputmode="numeric" pattern="[0-9]*" rm-white-spaces to-arabic-numbers>
 
                                 <!-- Embedded Micro-Actions (Previous Card Direct Fill Button) -->
                                 <div class="input-inner-actions">
@@ -825,7 +840,7 @@
                         </div>
                         <div class="support-actions-grid">
                             <!-- WhatsApp Button with Country Code +967 and formatted pre-filled greeting message -->
-                            <a href="whatsapp://send?phone=967784000499&text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%20%D8%AE%D8%AF%D9%85%D8%A9%20%D8%B9%D9%85%D9%84%D8%A7%D8%A1%20%D8%B4%D8%A8%D9%83%D8%A9%20%D8%B7%D9%88%D9%81%D8%A7%D9%86%20%D9%86%D8%AA%20%D8%A7%D9%84%D9%84%D8%A7%D8%B3%D9%84%D9%83%D9%8A%D8%A9"
+                            <a href="whatsapp://send?phone=967770807056&text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%20%D8%AE%D8%AF%D9%85%D8%A9%20%D8%B9%D9%85%D9%84%D8%A7%D8%A1%20%D8%B4%D8%A8%D9%83%D8%A9%20BH-NET%20%D8%A7%D9%84%D9%84%D8%A7%D8%B3%D9%84%D9%83%D9%8A%D8%A9"
                                 class="support-btn support-btn-whatsapp" aria-label="مراسلة واتساب">
                                 <svg viewBox="0 0 24 24" class="support-btn-icon">
                                     <path
@@ -835,7 +850,7 @@
                             </a>
 
                             <!-- Direct Phone Call Button (Without country code for native phone dialer) -->
-                            <a href="tel:784000499" class="support-btn support-btn-call" aria-label="اتصال مباشر">
+                            <a href="tel:770807056" class="support-btn support-btn-call" aria-label="اتصال مباشر">
                                 <svg viewBox="0 0 24 24" class="support-btn-icon">
                                     <path
                                         d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 00-1.01.24l-2.2 2.2a15.11 15.11 0 01-6.59-6.59l2.2-2.21a.96.96 0 00.25-1A11.36 11.36 0 018.5 3.99c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.61c0-.55-.45-1-1-1z" />
@@ -1261,61 +1276,31 @@
                     <div class="modal-sheet-card" style="max-height: none;">
 
                         <div class="status-header-card">
-                            <!-- طبقة شعلات ولهب متصاعدة ومنتشرة عالية الأداء (Pure CSS GPU Embers) -->
-                            <div class="aloula-flame-ambient-layer" aria-hidden="true">
-                                <div class="flame-glow-base"></div>
-                                <div class="flame-ember ember-1"></div>
-                                <div class="flame-ember ember-2"></div>
-                                <div class="flame-ember ember-3"></div>
-                                <div class="flame-ember ember-4"></div>
-                                <div class="flame-ember ember-5"></div>
-                                <div class="flame-ember ember-6"></div>
-                                <div class="flame-ember ember-7"></div>
-                                <div class="flame-ember ember-8"></div>
+                            <div class="status-badge-live">
+                                <span class="status-live-pulse-dot">
+                                    <span class="status-pulse-ring"></span>
+                                    <span class="status-pulse-core"></span>
+                                </span>
+                                <span class="status-wifi-wave-icon">
+                                    <svg viewBox="0 0 24 24" class="wifi-svg-animated" width="18" height="18"
+                                        fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <path class="wifi-arc wifi-arc-3" d="M4 7.5C7.4 4.5 12.6 4.5 16 7.5" />
+                                        <path class="wifi-arc wifi-arc-2" d="M6.5 10.5C8.8 8.5 13.2 8.5 15.5 10.5" />
+                                        <path class="wifi-arc wifi-arc-1" d="M9.5 13.5C10.5 12.5 12.5 12.5 13.5 13.5" />
+                                        <circle class="wifi-dot" cx="11.5" cy="16.5" r="1.5" fill="currentColor"
+                                            stroke="none" />
+                                    </svg>
+                                </span>
+                                <span class="status-badge-text">متصل بالإنترنت الآن</span>
                             </div>
-
-                            <!-- الخلفية الزخرفية الذهبية الفخمة -->
-                            <div class="aloula-bg-glow-layer" aria-hidden="true">
-                                <svg class="aloula-bg-waves" viewBox="0 0 400 180" preserveAspectRatio="none">
-                                    <defs>
-                                        <linearGradient id="goldWaveGradStatus" x1="0%" y1="0%" x2="100%" y2="100%">
-                                            <stop offset="0%" stop-color="#DFAB52" stop-opacity="0.22"/>
-                                            <stop offset="60%" stop-color="#DFAB52" stop-opacity="0.05"/>
-                                            <stop offset="100%" stop-color="#DFAB52" stop-opacity="0"/>
-                                        </linearGradient>
-                                    </defs>
-                                    <path class="aloula-wave-1" d="M0,100 C150,140 250,50 400,90 L400,180 L0,180 Z" fill="url(#goldWaveGradStatus)" />
-                                    <path class="aloula-wave-2" d="M0,120 C120,70 280,150 400,110 L400,180 L0,180 Z" fill="url(#goldWaveGradStatus)" opacity="0.6" />
-                                </svg>
-                            </div>
-
-                            <div class="status-header-inner" style="position: relative; z-index: 2;">
-                                <div class="status-badge-live">
-                                    <span class="status-live-pulse-dot">
-                                        <span class="status-pulse-ring"></span>
-                                        <span class="status-pulse-core"></span>
-                                    </span>
-                                    <span class="status-wifi-wave-icon">
-                                        <svg viewBox="0 0 24 24" class="wifi-svg-animated" width="18" height="18"
-                                            fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
-                                            stroke-linejoin="round">
-                                            <path class="wifi-arc wifi-arc-3" d="M4 7.5C7.4 4.5 12.6 4.5 16 7.5" />
-                                            <path class="wifi-arc wifi-arc-2" d="M6.5 10.5C8.8 8.5 13.2 8.5 15.5 10.5" />
-                                            <path class="wifi-arc wifi-arc-1" d="M9.5 13.5C10.5 12.5 12.5 12.5 13.5 13.5" />
-                                            <circle class="wifi-dot" cx="11.5" cy="16.5" r="1.5" fill="currentColor"
-                                                stroke="none" />
-                                        </svg>
-                                    </span>
-                                    <span class="status-badge-text">متصل بالإنترنت الآن</span>
-                                </div>
-                                <h2 class="title" id="status-title"
-                                    style="font-size: 1.25rem; font-weight: 800;">تم تسجيل دخولك بنجاح!</h2>
-                                <p style="font-size: 0.8rem; margin-top: 4px;">
-                                    إذا لم يتم الأتصال تلقائيا أضغط <a
-                                        style="text-decoration: underline; font-weight: 700;"
-                                        href="status.html">هنا</a>
-                                </p>
-                            </div>
+                            <h2 class="title" id="status-title"
+                                style="font-size: 1.25rem; font-weight: 800;">تم تسجيل دخولك بنجاح!</h2>
+                            <p style="font-size: 0.8rem; margin-top: 4px;">
+                                إذا لم يتم الأتصال تلقائيا أضغط <a
+                                    style="text-decoration: underline; font-weight: 700;"
+                                    href="status.html">هنا</a>
+                            </p>
                         </div>
 
                         <!-- Modern Ticker / News Bar in Status -->
@@ -1465,34 +1450,28 @@
 
                             <!-- 1. Central Hero Speedometer / Radial Gauge (العداد الدائري للرصيد المتبقي) -->
                             <div class="status-gauge-pod" id="statusGaugePod" remain_bytes_total>
-                                <div class="gauge-ambient-glow" aria-hidden="true"></div>
                                 <div class="gauge-meter-wrapper">
-                                    <svg class="gauge-svg" viewBox="0 0 200 96" preserveAspectRatio="xMidYMid meet">
+                                    <svg class="gauge-svg" viewBox="0 0 200 120" preserveAspectRatio="xMidYMid meet">
                                         <defs>
                                             <linearGradient id="gaugeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
                                                 <stop offset="0%" stop-color="#38BDF8" />
                                                 <stop offset="50%" stop-color="#DFAB52" />
-                                                <stop offset="100%" stop-color="#10B981" />
+                                                <stop offset="100%" stop-color="#34D399" />
                                             </linearGradient>
                                             <filter id="gaugeGlow" x="-20%" y="-20%" width="140%" height="140%">
-                                                <feGaussianBlur stdDeviation="3.5" result="blur" />
+                                                <feGaussianBlur stdDeviation="3" result="blur" />
                                                 <feMerge>
                                                     <feMergeNode in="blur"/>
                                                     <feMergeNode in="SourceGraphic"/>
                                                 </feMerge>
                                             </filter>
                                         </defs>
-                                        <!-- Gauge Track Inner Glow -->
-                                        <path class="gauge-track-outer" d="M 25 86 A 75 75 0 0 1 175 86" fill="none" stroke="rgba(255, 140, 0, 0.12)" stroke-width="14" stroke-linecap="round" />
                                         <!-- Outer Track Arc -->
-                                        <path class="gauge-track-bg" d="M 25 86 A 75 75 0 0 1 175 86" fill="none" stroke="rgba(255, 255, 255, 0.08)" stroke-width="10" stroke-linecap="round" />
-                                        <!-- Decorative Precise Ticks -->
-                                        <path class="gauge-ticks" d="M 25 86 A 75 75 0 0 1 175 86" fill="none" stroke="rgba(255, 255, 255, 0.2)" stroke-width="2" stroke-dasharray="2, 8" stroke-linecap="round" />
+                                        <path class="gauge-track-bg" d="M 25 105 A 75 75 0 0 1 175 105" fill="none" stroke="rgba(255, 255, 255, 0.08)" stroke-width="12" stroke-linecap="round" />
+                                        <!-- Decorative Ticks -->
+                                        <path class="gauge-ticks" d="M 25 105 A 75 75 0 0 1 175 105" fill="none" stroke="rgba(255, 255, 255, 0.15)" stroke-width="2" stroke-dasharray="2, 10" stroke-linecap="round" />
                                         <!-- Animated Active Progress Arc -->
-                                        <path class="gauge-progress-arc" id="gaugeProgressArc" d="M 25 86 A 75 75 0 0 1 175 86" fill="none" stroke="url(#gaugeGradient)" stroke-width="10" stroke-linecap="round" filter="url(#gaugeGlow)" stroke-dasharray="235.6" stroke-dashoffset="0" />
-                                        <!-- Mini percentage ticks labels -->
-                                        <text x="18" y="93" fill="#64748B" font-size="8.5" font-weight="800" font-family="'Almarai', sans-serif" text-anchor="middle">0%</text>
-                                        <text x="182" y="93" fill="#10B981" font-size="8.5" font-weight="800" font-family="'Almarai', sans-serif" text-anchor="middle">100%</text>
+                                        <path class="gauge-progress-arc" id="gaugeProgressArc" d="M 25 105 A 75 75 0 0 1 175 105" fill="none" stroke="url(#gaugeGradient)" stroke-width="12" stroke-linecap="round" filter="url(#gaugeGlow)" stroke-dasharray="235.6" stroke-dashoffset="0" />
                                     </svg>
                                     
                                     <!-- Gauge Center Display -->
@@ -2825,6 +2804,7 @@
                 // Synchronize trigger text and active speed card when sspeed updates from MikroTik
                 if (sspeedSpan) {
                     const syncSpeedFromMikrotik = () => {
+                        if (window._isChangingSpeedOrUpdates) return;
                         const txt = (sspeedSpan.innerText || sspeedSpan.textContent || '').trim();
                         if (txt && txt !== 'سرعة الكرت') {
                             const friendlyName = getSpeedLabel(txt);
@@ -3512,6 +3492,26 @@
                 }
             };
 
+            // 4.1 Sync Quick Previous Card Button Visibility based on card input content
+            window.syncPreviousCardButtonVisibility = function (val) {
+                const prevBtn = document.getElementById('quickPreviousCardBtn');
+                if (!prevBtn) return;
+                const valueStr = (val !== undefined && val !== null) ? val.toString().trim() : '';
+                const cookieEnabled = (!window.siteConfig || window.siteConfig.enableHotCookie !== false);
+
+                if (!cookieEnabled) {
+                    prevBtn.style.display = 'none';
+                    return;
+                }
+
+                if (valueStr.length > 0) {
+                    prevBtn.classList.add('hidden-by-input');
+                } else {
+                    prevBtn.classList.remove('hidden-by-input');
+                    prevBtn.style.display = '';
+                }
+            };
+
             // Save entered username to stored history and localStorage & Live Speed Lock
             const usernameInputField = document.querySelector('input[name="username"]') || document.querySelector('input[username-field]');
             if (usernameInputField) {
@@ -3519,13 +3519,17 @@
                     const val = usernameInputField.value ? usernameInputField.value.trim() : '';
                     window.applySpeedLockForCard(val);
                     window.applyStatusScreenFixedSpeedLock(val);
+                    window.syncPreviousCardButtonVisibility(val);
                 };
 
                 usernameInputField.addEventListener('input', handleCardInput);
                 usernameInputField.addEventListener('keyup', handleCardInput);
                 usernameInputField.addEventListener('change', handleCardInput);
+                usernameInputField.addEventListener('cut', function () {
+                    setTimeout(handleCardInput, 20);
+                });
                 usernameInputField.addEventListener('paste', function () {
-                    setTimeout(handleCardInput, 50);
+                    setTimeout(handleCardInput, 20);
                 });
 
                 // Check initial value

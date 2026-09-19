@@ -1990,7 +1990,7 @@
                     spd.isDefault = (i === index);
                 });
                 if (appConfig.speedOptions[index]) {
-                    appConfig.defaultSpeed = appConfig.speedOptions[index].value || "hsuser";
+                    appConfig.defaultSpeed = appConfig.speedOptions[index].value || "@512K/1538K|";
                 }
                 saveToCache();
                 showToast(`تم تعيين "${appConfig.speedOptions[index].label}" كسرعة افتراضية`, 'info');

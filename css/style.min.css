@@ -116,6 +116,16 @@ button {
   -webkit-tap-highlight-color: transparent;
 }
 
+input,
+textarea,
+.login-input {
+  -webkit-touch-callout: default !important;
+  -webkit-user-select: text !important;
+  -moz-user-select: text !important;
+  -ms-user-select: text !important;
+  user-select: text !important;
+}
+
 /* ==========================================================================
    DYNAMIC SMART SCROLLBAR (DISCREET & MODERN)
    ========================================================================== */
@@ -1363,9 +1373,33 @@ input[name="username"] {
   font-weight: 800;
   white-space: nowrap;
   cursor: pointer;
-  transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+              max-width 0.24s cubic-bezier(0.4, 0, 0.2, 1),
+              padding 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+              margin 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.2s ease,
+              background 0.2s ease,
+              box-shadow 0.2s ease;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
   user-select: none;
+  max-width: 140px;
+  overflow: hidden;
+  opacity: 1;
+  transform: scale(1);
+}
+
+.prev-card-pill-btn.hidden-by-input {
+  opacity: 0 !important;
+  max-width: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  border-width: 0 !important;
+  pointer-events: none !important;
+  transform: scale(0.85) !important;
+  visibility: hidden !important;
 }
 
 .prev-card-pill-btn:hover {

@@ -202,6 +202,12 @@ app.all('/status', (req, res) => {
 
   if (isAjax) {
     res.setHeader('Content-Type', 'application/json');
+    if (!simulatedSession.logged_in) {
+      return res.json({
+        logged_in: "no",
+        action: "onStatusQuery"
+      });
+    }
     return res.json({
       logged_in: "yes",
       username: username,
