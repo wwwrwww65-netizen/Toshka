@@ -145,8 +145,8 @@ window.siteConfig = {
     "offersBadge": "عرض مجاني",
     "offersBadgeV": true,
     "offersBtnText": "📺 الاستراحة والبث المباشر",
-    "offersBtnUrl": "",
-    "offersBtnV": false,
+    "offersBtnUrl": "fiberlive/live.html",
+    "offersBtnV": true,
     "loan-button": false,
     "loan-text": "أهلاً بك زائرنا في شبكة توشكا نت",
     "salesPoints": [
