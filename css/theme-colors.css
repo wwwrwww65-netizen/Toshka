@@ -105,33 +105,63 @@ body {
   overflow:         hidden !important;
 }
 
-/* صورة خلفية الجزء العلوي من رأس الصفحة حتى أسفل الشريط الإخباري (living_room_430x360.png) */
-.top-hero-backdrop-image {
-  position:          absolute !important;
-  top:               0 !important;
-  left:              50% !important;
-  transform:         translateX(-50%) !important;
-  width:             100% !important;
-  max-width:         480px !important;
-  height:            360px !important;
-  background-image:  url('../img/living_room_430x360.png'), url('../living_room_430x360.png'), url('img/living_room_430x360.png') !important;
-  background-size:   cover !important;
-  background-position: top center !important;
+/* ══════════════════════════════════════════════════════════════════
+   3. الحاوية الشاملة للجزء العلوي حتى أسفل الشريط الإخباري بالصورة الكاملة
+   ══════════════════════════════════════════════════════════════════ */
+
+.top-hero-section-wrapper {
+  position:          relative !important;
+  width:             calc(100% + 28px) !important;
+  max-width:         calc(100% + 28px) !important;
+  min-width:         calc(100% + 28px) !important;
+  margin-left:       -14px !important;
+  margin-right:      -14px !important;
+  margin-inline-start: -14px !important;
+  margin-inline-end:   -14px !important;
+  margin-top:        -12px !important;
+  margin-bottom:     14px !important;
+  padding:           12px 14px 12px 14px !important;
+  background-image:  url('../img/living_room_430x360.webp') !important;
+  background-size:   100% 100% !important;
+  background-position: center top !important;
   background-repeat: no-repeat !important;
-  pointer-events:    none !important;
-  z-index:           1 !important;
-  display:           block !important;
-  border-bottom-left-radius: 20px !important;
-  border-bottom-right-radius: 20px !important;
+  box-sizing:        border-box !important;
+  border-bottom-left-radius: 16px !important;
+  border-bottom-right-radius: 16px !important;
   overflow:          hidden !important;
+  z-index:           2 !important;
 }
 
-.top-hero-backdrop-image::after {
-  content:           "" !important;
-  position:          absolute !important;
-  inset:             0 !important;
-  background:        linear-gradient(180deg, rgba(6, 9, 17, 0.35) 0%, rgba(6, 9, 17, 0.15) 40%, rgba(6, 9, 17, 0.7) 85%, #060911 100%) !important;
-  pointer-events:    none !important;
+.top-hero-section-wrapper .section {
+  margin-bottom:     0 !important;
+}
+
+@media screen and (max-width: 375px) {
+  .top-hero-section-wrapper {
+    width:           calc(100% + 16px) !important;
+    max-width:       calc(100% + 16px) !important;
+    min-width:       calc(100% + 16px) !important;
+    margin-left:     -8px !important;
+    margin-right:    -8px !important;
+    margin-inline-start: -8px !important;
+    margin-inline-end:   -8px !important;
+    margin-top:      -10px !important;
+    padding:         10px 8px 10px 8px !important;
+  }
+}
+
+@media screen and (min-width: 481px) {
+  .top-hero-section-wrapper {
+    width:           calc(100% + 32px) !important;
+    max-width:       calc(100% + 32px) !important;
+    min-width:       calc(100% + 32px) !important;
+    margin-left:     -16px !important;
+    margin-right:    -16px !important;
+    margin-inline-start: -16px !important;
+    margin-inline-end:   -16px !important;
+    margin-top:      -20px !important;
+    padding:         20px 16px 14px 16px !important;
+  }
 }
 
 /* إخفاء الأشكال العشوائية القديمة */
@@ -312,6 +342,42 @@ body {
   letter-spacing:  0.3px !important;
   white-space:     nowrap !important;
   text-shadow:     0 1px 4px rgba(0, 0, 0, 0.9) !important;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   عبارة المباريات المباشرة في منتصف الصورة (أبيض وذهبي)
+   ══════════════════════════════════════════════════════════════════ */
+
+.hero-live-matches-tagline {
+  display:         inline-flex !important;
+  align-items:     center !important;
+  justify-content: center !important;
+  gap:             5px !important;
+  margin-top:      6px !important;
+  padding:         3px 12px !important;
+  background:      rgba(6, 9, 17, 0.6) !important;
+  backdrop-filter: blur(6px) !important;
+  -webkit-backdrop-filter: blur(6px) !important;
+  border:          1px solid rgba(223, 171, 82, 0.45) !important;
+  border-radius:   20px !important;
+  box-shadow:      0 2px 10px rgba(0, 0, 0, 0.6), 0 0 10px rgba(223, 171, 82, 0.25) !important;
+  direction:       rtl !important;
+}
+
+.hero-live-matches-tagline .tagline-text-white {
+  font-size:       clamp(12px, 3.4vw, 14px) !important;
+  font-weight:     700 !important;
+  color:           #FFFFFF !important;
+  white-space:     nowrap !important;
+  text-shadow:     0 2px 6px rgba(0, 0, 0, 0.95) !important;
+}
+
+.hero-live-matches-tagline .tagline-text-gold {
+  font-size:       clamp(12px, 3.4vw, 14px) !important;
+  font-weight:     900 !important;
+  color:           #F5B942 !important;
+  white-space:     nowrap !important;
+  text-shadow:     0 0 8px rgba(245, 185, 66, 0.8), 0 2px 6px rgba(0, 0, 0, 0.95) !important;
 }
 
 /* جهة اليسار: الهالة الدائرية الذهبية المشعة مع رمز الواي فاي */

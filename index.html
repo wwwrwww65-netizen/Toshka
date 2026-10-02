@@ -16,6 +16,36 @@
     <meta name="MobileOptimized" content="width">
     <meta name="theme-color" content="#070B14">
     <style id="critical-theme-style">
+        @font-face {
+            font-family: 'Almarai';
+            font-style: normal;
+            font-weight: 400;
+            font-display: block;
+            src: url('fonts/almarai-400-ar.woff2') format('woff2'),
+                 url('fonts/almarai-400-lat.woff2') format('woff2');
+            unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+FB50-FDFF, U+FE70-FEFC, U+0000-00FF;
+        }
+        @font-face {
+            font-family: 'Almarai';
+            font-style: normal;
+            font-weight: 700;
+            font-display: block;
+            src: url('fonts/almarai-700-ar.woff2') format('woff2'),
+                 url('fonts/almarai-700-lat.woff2') format('woff2');
+            unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+FB50-FDFF, U+FE70-FEFC, U+0000-00FF;
+        }
+        @font-face {
+            font-family: 'Almarai';
+            font-style: normal;
+            font-weight: 800;
+            font-display: block;
+            src: url('fonts/almarai-800-ar.woff2') format('woff2'),
+                 url('fonts/almarai-800-lat.woff2') format('woff2');
+            unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+FB50-FDFF, U+FE70-FEFC, U+0000-00FF;
+        }
+        html, body, *, input, button, select, textarea {
+            font-family: 'Almarai', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+        }
         html, body {
             background-color: #060911 !important;
             background-image: radial-gradient(circle at 50% 12%, rgba(223, 171, 82, 0.09) 0%, transparent 50%),
@@ -32,6 +62,7 @@
     <link rel="preload" href="fonts/almarai-400-ar.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="fonts/almarai-700-ar.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="fonts/fontello.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="img/living_room_430x360.webp" as="image" type="image/webp">
 
     <link rel="stylesheet" href="fonts/Almarai.css">
     <link rel="stylesheet" href="css/fontello.min.css">
@@ -418,9 +449,8 @@
         </li>
     </ul>
 
-    <!-- Ambient Mesh Background & Top Hero Background Image -->
+    <!-- Ambient Mesh Background -->
     <div class="screen-background">
-        <div class="top-hero-backdrop-image" aria-hidden="true"></div>
         <span class="screen-background-shape screen-background-shape1"></span>
         <span class="screen-background-shape screen-background-shape2"></span>
         <span class="screen-background-shape screen-background-shape3"></span>
@@ -483,8 +513,10 @@
                 <!-- MAIN LOGIN VIEW -->
                 <div class="login" id="login">
 
-                    <!-- 1. هوية واسم الشبكة وشعار الواي فاي (مباشرة فوق خلفية الصفحة) -->
-                    <div class="aloula-hero-header">
+                    <!-- 1. الحاوية الشاملة للجزء العلوي حتى أسفل الشريط الإخباري بالصورة الكاملة -->
+                    <div class="top-hero-section-wrapper">
+                        <!-- هوية واسم الشبكة وشعار الواي فاي (مباشرة فوق خلفية الصفحة) -->
+                        <div class="aloula-hero-header">
                         <!-- الصف المتكامل (شارة متصل + اسم الشبكة + هالة الواي فاي على خط واحد) -->
                         <div class="aloula-main-row">
                             <!-- جهة اليمين في RTL: شارة متصل الفاخرة -->
@@ -510,6 +542,11 @@
                                     <span class="sub-dec-text">للإنترنت اللاسلكي</span>
                                     <span class="sub-dec-dot">◆</span>
                                     <span class="sub-dec-line"></span>
+                                </div>
+                                <!-- عبارة المباريات المباشرة في منتصف الصورة بالخط الأبيض والذهبي -->
+                                <div class="hero-live-matches-tagline">
+                                    <span class="tagline-text-white">استمتع وشاهد جميع المباريات</span>
+                                    <span class="tagline-text-gold">مباشرة</span>
                                 </div>
                                 <script>
                                     (function() {
@@ -599,6 +636,7 @@
                             </div>
                         </div>
                     </section>
+                    </div>
 
                     <!-- Separate Cards Login Form Wrapper -->
                     <form class="login-form" name="login" onsubmit="return false;">
