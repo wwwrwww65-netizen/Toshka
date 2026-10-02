@@ -45,7 +45,7 @@
   --shadow-glow: 0 4px 14px rgba(255, 87, 34, 0.35);
 
   --font-main:
-    "Almarai", "Tajawal", "Cairo", -apple-system, BlinkMacSystemFont,
+    "Almarai", -apple-system, BlinkMacSystemFont,
     "SF Pro Text", "SF Pro Display", "Segoe UI", Roboto, sans-serif;
   --transition-smooth: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 
