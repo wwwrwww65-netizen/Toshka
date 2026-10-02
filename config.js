@@ -241,3 +241,8 @@ window.siteConfig = {
     "sell-point-button": true,
     "show-date-field": true
 };
+
+if (typeof Config === 'function') {
+    Config(window.siteConfig);
+}
+window.hotspotConfig = window.siteConfig;
