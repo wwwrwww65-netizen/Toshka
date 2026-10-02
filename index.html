@@ -506,16 +506,15 @@
                             </svg>
                         </div>
 
-                        <!-- الشريط العلوي (حالة متصل على اليمين) -->
-                        <div class="aloula-top-bar">
-                            <div class="network-status-badge aloula-status-pill">
-                                <span class="status-pulse-dot"></span>
-                                <span class="status-badge-text">متصل</span>
-                            </div>
-                        </div>
-
-                        <!-- القسم الأوسط الرئيسي (شعار الواي فاي الدائري المشع + اسم الشبكة الفخم) -->
+                        <!-- الصف العلوي المتكامل (شارة متصل + اسم الشبكة + هالة الواي فاي على خط واحد) -->
                         <div class="aloula-main-row">
+                            <!-- جهة اليمين في RTL: شارة متصل الفاخرة -->
+                            <div class="aloula-status-col">
+                                <div class="network-status-badge aloula-status-pill">
+                                    <span class="status-pulse-dot"></span>
+                                    <span class="status-badge-text">متصل</span>
+                                </div>
+                            </div>
                             <!-- جهة اليمين في RTL: عنوان وهوية الشبكة (الأولى نت) -->
                             <div class="aloula-brand-col">
                                 <div class="aloula-title-wrap">
@@ -565,8 +564,8 @@
 
                                             // Auto-fit font size if name is long (e.g. "شبكة الأولى نت")
                                             if (prefix.length > 8) {
-                                                if (prefixEl) prefixEl.style.fontSize = 'clamp(22px, 6.5vw, 30px)';
-                                                if (suffixEl) suffixEl.style.fontSize = 'clamp(22px, 6.5vw, 30px)';
+                                                if (prefixEl) prefixEl.style.fontSize = 'clamp(24px, 7.2vw, 34px)';
+                                                if (suffixEl) suffixEl.style.fontSize = 'clamp(24px, 7.2vw, 34px)';
                                             }
                                         } catch (e) {}
                                     })();
@@ -588,30 +587,6 @@
                                         <circle class="wifi-sig wifi-sig-dot" cx="12" cy="19.5" r="1.9"/>
                                     </svg>
                                 </div>
-                            </div>
-                        </div>
-
-                        <!-- الشريط السفلي المدمج للمميزات الثلاث (اتصال سريع | خدمة مميزة | ثقة متجددة) -->
-                        <div class="aloula-features-strip">
-                            <div class="aloula-feature-item">
-                                <svg viewBox="0 0 24 24" class="aloula-feat-icon">
-                                    <path d="M7 2v11h3v9l7-12h-4l4-8z"/>
-                                </svg>
-                                <span class="aloula-feat-text">اتصال سريع</span>
-                            </div>
-                            <div class="aloula-feat-divider"></div>
-                            <div class="aloula-feature-item">
-                                <svg viewBox="0 0 24 24" class="aloula-feat-icon">
-                                    <path d="M19 3H5L2 9l10 12L22 9l-3-6zM5.5 5h13l1.8 3.6-8.3 10-8.3-10L5.5 5z"/>
-                                </svg>
-                                <span class="aloula-feat-text">خدمة مميزة</span>
-                            </div>
-                            <div class="aloula-feat-divider"></div>
-                            <div class="aloula-feature-item">
-                                <svg viewBox="0 0 24 24" class="aloula-feat-icon">
-                                    <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/>
-                                </svg>
-                                <span class="aloula-feat-text">ثقة متجددة</span>
                             </div>
                         </div>
                     </div>
