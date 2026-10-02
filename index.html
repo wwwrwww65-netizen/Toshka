@@ -621,53 +621,17 @@
                     <div class="ads-carousel-wrapper">
                         <div class="carousel-container" id="adCarousel">
                             <div class="carousel-track" id="carouselTrack">
-                                <div class="carousel-slide">
-                                    <img class="im1" src="./adimg/1.jpg" alt="إعلان 1" fetchpriority="high"
-                                        decoding="async">
-                                </div>
-                                <div class="carousel-slide">
-                                    <img class="im2" src="./adimg/2.jpg" alt="إعلان 2" loading="lazy" decoding="async">
-                                </div>
-                                <div class="carousel-slide">
-                                    <img class="im3" src="./adimg/3.jpg" alt="إعلان 3" loading="lazy" decoding="async">
-                                </div>
-                                <div class="carousel-slide">
-                                    <img class="im4" src="./adimg/4.jpg" alt="إعلان 4" loading="lazy" decoding="async">
-                                </div>
-                                <div class="carousel-slide">
-                                    <img class="im5" src="./adimg/5.jpg" alt="إعلان 5" loading="lazy" decoding="async">
-                                </div>
-                                <div class="carousel-slide">
-                                    <img class="im6" src="./adimg/6.jpg" alt="إعلان 6" loading="lazy" decoding="async">
-                                </div>
-                                <div class="carousel-slide">
-                                    <img class="im7" src="./adimg/7.jpg" alt="إعلان 7" loading="lazy" decoding="async">
-                                </div>
+                                <!-- يتم إنشاء شرائح الصور ديناميكياً من config.js فقط عند تفعيلها ووجود صور -->
                             </div>
                             <button class="carousel-nav-btn prev" id="carouselPrev" aria-label="السابق">❮</button>
                             <button class="carousel-nav-btn next" id="carouselNext" aria-label="التالي">❯</button>
                         </div>
                         <div class="carousel-dots" id="carouselDots">
-                            <span class="carousel-dot active"></span>
-                            <span class="carousel-dot"></span>
-                            <span class="carousel-dot"></span>
-                            <span class="carousel-dot"></span>
-                            <span class="carousel-dot"></span>
-                            <span class="carousel-dot"></span>
-                            <span class="carousel-dot"></span>
                         </div>
 
                         <!-- Preserving legacy .ads .box for any legacy script checks -->
                         <div class="ads" style="display: none;">
-                            <div class="box">
-                                <span style="--i:1"><img class="im1" src="./adimg/1.jpg"></span>
-                                <span style="--i:2"><img class="im2" src="./adimg/2.jpg"></span>
-                                <span style="--i:3"><img class="im3" src="./adimg/3.jpg"></span>
-                                <span style="--i:4"><img class="im4" src="./adimg/4.jpg"></span>
-                                <span style="--i:5"><img class="im5" src="./adimg/5.jpg"></span>
-                                <span style="--i:6"><img class="im6" src="./adimg/6.jpg"></span>
-                                <span style="--i:7"><img class="im7" src="./adimg/7.jpg"></span>
-                            </div>
+                            <div class="box"></div>
                         </div>
                     </div>
 
@@ -1694,6 +1658,14 @@
                 if (wrapper) wrapper.style.display = 'none';
                 track.innerHTML = '';
             } else if (track) {
+                const imgCount = parseInt(cfgSite.imageCount || 0);
+                track.innerHTML = '';
+                for (let i = 1; i <= imgCount; i++) {
+                    const slide = document.createElement('div');
+                    slide.className = 'carousel-slide';
+                    slide.innerHTML = `<img class="im${i}" src="./adimg/${i}.jpg" alt="إعلان ${i}" loading="lazy" decoding="async">`;
+                    track.appendChild(slide);
+                }
                 const imgElements = Array.from(track.querySelectorAll('img'));
 
                 // Verify which images actually exist before initializing carousel using a fresh Image object
