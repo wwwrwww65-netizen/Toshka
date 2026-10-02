@@ -2146,7 +2146,32 @@
 
         // GENERATE CONFIG CODE STRING
         function generateConfigJS() {
-            return `window.siteConfig = ${JSON.stringify(appConfig, null, 4)};\n`;
+            // Synchronize legacy keys so both new and legacy template engines work seamlessly
+            if (appConfig.siteName) {
+                appConfig["network-name"] = appConfig.siteName;
+            }
+            if (appConfig.supportPhone) {
+                appConfig["service-number"] = appConfig.supportPhone;
+                appConfig["callPhone"] = appConfig.supportPhone;
+            }
+            if (Array.isArray(appConfig.packages)) {
+                appConfig.profiles = appConfig.packages.map(p => ({
+                    price: p.price || '',
+                    time: p.time || 'مفتوح',
+                    transfer: p.size || p.transfer || '',
+                    validity: p.vl || p.validity || ''
+                }));
+            }
+            if (Array.isArray(appConfig.salesPoints)) {
+                appConfig["sell-points"] = appConfig.salesPoints.map(sp => ({
+                    name: typeof sp === 'object' ? (sp.name || '') : String(sp)
+                }));
+            }
+            if (appConfig.textSlider1) {
+                appConfig["news-line"] = appConfig.textSlider1;
+            }
+
+            return `window.siteConfig = ${JSON.stringify(appConfig, null, 4)};\n\nif (typeof Config === 'function') {\n    Config(window.siteConfig);\n}\nwindow.hotspotConfig = window.siteConfig;\n`;
         }
 
         // DOWNLOAD FILE
