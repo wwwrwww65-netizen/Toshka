@@ -39,25 +39,25 @@
 
   /* ─── أسطح وخلفيات ليلية كحلية كربونية عميقة (Deep Midnight Slate) ─── */
   --color-bg-page:         #060911;   /* خلفية ليلية داكنة جداً وفخمة */
-  --color-bg-header:       #080E1A;   /* هيدر داكن */
-  --color-bg-card:         #0C1322;   /* بطاقات كحلية داكنة راقية */
-  --color-bg-card-hover:   #101A2E;   /* بطاقة عند التحويم */
-  --color-bg-input:        #080D18;   /* حقول الإدخال والكبسولات غير المفعلة */
-  --color-bg-surface:      #0E1729;   /* سطح ثانوي */
+  --color-bg-header:       #0C1527;   /* هيدر داكن */
+  --color-bg-card:         #131E35;   /* بطاقات كحلية أفتح قليلاً وواضحة جداً عن خلفية الصفحة */
+  --color-bg-card-hover:   #182642;   /* بطاقة عند التحويم */
+  --color-bg-input:        #0E182A;   /* حقول الإدخال والكبسولات غير المفعلة */
+  --color-bg-surface:      #16243E;   /* سطح ثانوي */
 
-  /* ─── الشفافيات الذهبية والحدود النحيفة الأنيقة (Hairline Borders) ─── */
-  --color-gold-pale:       rgba(223, 171, 82, 0.14); /* خلفية الأيقونات والشارات */
-  --color-gold-border:     rgba(223, 171, 82, 0.42); /* إطارات ذهبية نحيفة وواضحة دافئة */
-  --color-border:          rgba(223, 171, 82, 0.25); /* حدود البطاقات النحيفة */
-  --color-border-mid:      rgba(223, 171, 82, 0.35); /* حدود الحقول والكبسولات */
+  /* ─── الشفافيات الذهبية والحدود النحيفة الأنيقة والنيون الخفيف ─── */
+  --color-gold-pale:       rgba(245, 185, 66, 0.14); /* خلفية الأيقونات والشارات */
+  --color-gold-border:     rgba(245, 185, 66, 0.48); /* إطارات ذهبية نحيفة وواضحة دافئة */
+  --color-border:          rgba(245, 185, 66, 0.42); /* حدود البطاقات والحاويات - ذهبي نيون خفيف */
+  --color-border-mid:      rgba(245, 185, 66, 0.52); /* حدود الحقول والكبسولات */
   --color-border-focus:    #DFAB52;                  /* تركيز الحقول */
 
-  /* ─── الظلال الهادئة المتناسقة مع تصميم الصورة ─── */
-  --shadow-card:           0 10px 30px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(223, 171, 82, 0.22);
-  --shadow-card-hover:     0 14px 36px rgba(0, 0, 0, 0.75), 0 0 16px rgba(223, 171, 82, 0.25);
+  /* ─── الظلال والهالات النيون الذهبية الخفيفة الفاخرة وسريعة الأداء ─── */
+  --shadow-card:           0 10px 28px rgba(0, 0, 0, 0.65), 0 0 14px rgba(245, 185, 66, 0.16), inset 0 0 8px rgba(245, 185, 66, 0.03);
+  --shadow-card-hover:     0 14px 34px rgba(0, 0, 0, 0.75), 0 0 20px rgba(245, 185, 66, 0.26), inset 0 0 10px rgba(245, 185, 66, 0.05);
   --shadow-btn:            0 4px 18px rgba(223, 171, 82, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.38);
-  --shadow-nav:            0 -4px 30px rgba(0, 0, 0, 0.75), 0 -1px 0 rgba(223, 171, 82, 0.2);
-  --glow-gold:             0 0 14px rgba(223, 171, 82, 0.45);
+  --shadow-nav:            0 -4px 30px rgba(0, 0, 0, 0.75), 0 -1px 0 rgba(245, 185, 66, 0.28);
+  --glow-gold:             0 0 14px rgba(245, 185, 66, 0.45);
 }
 
 
@@ -588,7 +588,7 @@ button.login-submit:hover,
 }
 
 .app-card:hover {
-  border-color: rgba(223, 171, 82, 0.38) !important;
+  border-color: rgba(245, 185, 66, 0.68) !important;
   box-shadow:   var(--shadow-card-hover) !important;
 }
 
@@ -863,39 +863,39 @@ button.login-submit:hover,
    ══════════════════════════════════════════════════════════════════ */
 
 .input-wrapper-glass {
-  background:    #0A111F !important; /* خلفية أفتح قليلاً وأوضح للعين */
-  border:        1.5px solid rgba(223, 171, 82, 0.48) !important; /* إطار ذهبي أوضح وأبرز */
+  background:    #223554 !important; /* لون فاتح واضح ومميز يبرز حقل الكرت بشكل قاطع عن لون الحاوية الداكن */
+  border:        1.5px solid rgba(245, 185, 66, 0.65) !important; /* إطار ذهبي نيون مشرق وبارز */
   border-radius: 14px !important;
-  box-shadow:    0 4px 18px rgba(0, 0, 0, 0.55), inset 0 1px 1px rgba(255, 255, 255, 0.08) !important;
+  box-shadow:    0 4px 18px rgba(0, 0, 0, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.12), 0 0 14px rgba(245, 185, 66, 0.16) !important;
   transition:    all 0.25s ease !important;
 }
 
 /* حالة التركيز على الحقل (Focus Glow الهادئ) */
 .input-wrapper-glass:focus-within {
-  background:   #0E1729 !important;
-  border-color: #DFAB52 !important;
-  box-shadow:   0 0 0 3px rgba(223, 171, 82, 0.35), 0 0 18px rgba(223, 171, 82, 0.28) !important;
+  background:   #2A4168 !important; /* لون أفتح أثناء الكتابة */
+  border-color: #F5BA42 !important;
+  box-shadow:   0 0 0 3px rgba(245, 185, 66, 0.4), 0 0 22px rgba(245, 185, 66, 0.38) !important;
 }
 
 /* أيقونة داخل الحقل */
 .input-icon-badge {
-  background: rgba(223, 171, 82, 0.18) !important;
-  border:     1px solid rgba(223, 171, 82, 0.5) !important;
+  background: rgba(245, 185, 66, 0.2) !important;
+  border:     1px solid rgba(245, 185, 66, 0.55) !important;
   color:      #DFAB52 !important;
 }
 .input-icon-badge svg { 
-  fill: #DFAB52 !important;
-  filter: drop-shadow(0 0 5px rgba(223, 171, 82, 0.55)) !important;
+  fill: #DFAB52 !important; 
+  filter: drop-shadow(0 0 5px rgba(223, 171, 82, 0.55)) !important; 
 }
 
 /* زر الكاميرا (مسح QR) */
 .input-icon-badge.camera-scan-btn {
-  background: #0E1729 !important;
-  border:     1px solid rgba(223, 171, 82, 0.4) !important;
+  background: #111B2E !important;
+  border:     1px solid rgba(245, 185, 66, 0.45) !important;
 }
 .input-icon-badge.camera-scan-btn svg { fill: #DFAB52 !important; }
 .input-icon-badge.camera-scan-btn:hover {
-  background: rgba(223, 171, 82, 0.25) !important;
+  background: rgba(245, 185, 66, 0.25) !important;
   border-color: #DFAB52 !important;
   box-shadow: 0 0 10px rgba(223, 171, 82, 0.45) !important;
 }
@@ -903,6 +903,7 @@ button.login-submit:hover,
 /* نص الكرت المُدخل */
 .login-input,
 input[name="username"] {
+  background:  transparent !important;
   color:       #FFFFFF !important;
   font-weight: 800 !important;
   letter-spacing: 1px !important;
@@ -910,7 +911,7 @@ input[name="username"] {
 
 /* النص الإرشادي (Placeholder) - واضح وبارز للمستخدم */
 .login-input::placeholder {
-  color:       #94A3B8 !important; /* لون رمادي فاتح مائل للفضي وواضح جداً للقراءة */
+  color:       #CBD5E1 !important; /* لون فضي فاتح ناصع وواضح جداً للقراءة */
   opacity:     1 !important;
   font-weight: 600 !important;
   letter-spacing: normal !important;
@@ -918,15 +919,15 @@ input[name="username"] {
 
 /* زر "دخول بكرت سابق" */
 .prev-card-pill-btn {
-  background:    #101A2E !important;
-  border:        1px solid rgba(223, 171, 82, 0.38) !important;
-  color:         #E2E8F0 !important;
+  background:    #142137 !important;
+  border:        1px solid rgba(245, 185, 66, 0.5) !important;
+  color:         #FFFFFF !important;
   border-radius: 9px !important;
   font-weight:   700 !important;
   transition:    all 0.2s ease !important;
 }
 .prev-card-pill-btn:hover {
-  background:    rgba(223, 171, 82, 0.22) !important;
+  background:    rgba(245, 185, 66, 0.25) !important;
   border-color:  #DFAB52 !important;
   color:         #DFAB52 !important;
   box-shadow:    0 0 10px rgba(223, 171, 82, 0.35) !important;
@@ -1302,9 +1303,9 @@ input[name="username"] {
 
 .modal-sheet-card {
   background:    var(--color-bg-card) !important;
-  border:        1px solid rgba(223, 171, 82, 0.32) !important;
+  border:        1px solid rgba(245, 185, 66, 0.48) !important;
   border-radius: 20px !important;
-  box-shadow:    0 25px 50px rgba(0, 0, 0, 0.8), 0 0 24px rgba(223, 171, 82, 0.18) !important;
+  box-shadow:    0 25px 50px rgba(0, 0, 0, 0.8), 0 0 24px rgba(245, 185, 66, 0.22) !important;
   color:         var(--color-text-main) !important;
   max-height:    min(85vh, calc(100dvh - 36px)) !important;
   overflow-y:    auto !important;
@@ -3387,6 +3388,58 @@ body.quran-reading-mode nav {
   color: #E2E8F0 !important;
   background: rgba(255, 255, 255, 0.08) !important;
   text-decoration: none !important;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   إطارات نيون ذهبية ناعمة لجميع الحاويات والبطاقات في جميع الشاشات
+   Subtle Neon Gold Glow Borders — Hardware-Accelerated & Ultra Lightweight
+   ══════════════════════════════════════════════════════════════════ */
+.app-card,
+.customer-support-section,
+.status-header-card,
+.statusdiv,
+.modal-sheet-card,
+.loyalty-modal-content,
+.points-auth-modal-card,
+.status-gauge-pod,
+.status-session-hub,
+.traffic-pod,
+.metric-card-glass,
+.stream-card-link,
+.quran-strip-card,
+.entertainment-links .stream-card-link,
+.block-card-warning,
+.price-card,
+.point-card,
+.app-box,
+.price-div,
+.sell-point-div,
+#price .wrapper,
+#sell-point .wrapper,
+#speed .wrapper,
+#loan .wrapper {
+  background: var(--color-bg-card, #131E35) !important;
+  border: 1px solid rgba(245, 185, 66, 0.44) !important;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.65), 0 0 14px rgba(245, 185, 66, 0.16), inset 0 0 8px rgba(245, 185, 66, 0.03) !important;
+  transition: border-color 0.22s ease, box-shadow 0.22s ease, transform 0.22s ease, background 0.22s ease !important;
+}
+
+.app-card:hover,
+.customer-support-section:hover,
+.status-header-card:hover,
+.statusdiv:hover,
+.modal-sheet-card:hover,
+.status-gauge-pod:hover,
+.status-session-hub:hover,
+.traffic-pod:hover,
+.metric-card-glass:hover,
+.stream-card-link:hover,
+.quran-strip-card:hover,
+.price-card:hover,
+.point-card:hover {
+  background: var(--color-bg-card-hover, #182642) !important;
+  border-color: rgba(245, 185, 66, 0.72) !important;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.75), 0 0 20px rgba(245, 185, 66, 0.28), inset 0 0 10px rgba(245, 185, 66, 0.05) !important;
 }
 
 
