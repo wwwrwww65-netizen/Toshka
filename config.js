@@ -50,8 +50,8 @@ window.siteConfig = {
             "isDefault": false
         }
     ],
-    "imageCount": "7",
-    "imageV": true,
+    "imageCount": "0",
+    "imageV": false,
     "packages": [
         {
             "price": "100 ريال",

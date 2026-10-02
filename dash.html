@@ -1237,7 +1237,7 @@
 
                         <div class="form-group">
                             <label class="form-label" for="imageCountInput"><i class="fas fa-layer-group"></i> عدد صور البنر المعروضة</label>
-                            <input type="number" class="form-control" id="imageCountInput" min="1" max="10" oninput="updateConfigField('imageCount', this.value); updateStats();">
+                            <input type="number" class="form-control" id="imageCountInput" min="0" max="10" oninput="updateConfigField('imageCount', this.value); updateStats();">
                             
                             <div class="banner-guide-box" style="margin-top: 12px; background: rgba(16, 185, 129, 0.08); border: 1px dashed rgba(16, 185, 129, 0.35); border-radius: 10px; padding: 14px 16px;">
                                 <div style="display: flex; align-items: center; gap: 8px; color: #10b981; font-weight: 700; font-size: 0.92rem; margin-bottom: 8px;">
@@ -1675,8 +1675,8 @@
             whatsappPhone: "967770807056",
             whatsappMsg: "مرحبا خدمة عملاء شبكة {network-name} اللاسلكية",
             speedOptions: [],
-            imageCount: "7",
-            imageV: true,
+            imageCount: "0",
+            imageV: false,
             packages: [],
             offersTitle: "عروض ومميزات الشبكة الحصرية 🔥",
             offers: "",
@@ -1731,7 +1731,7 @@
             }
             if (appConfig.welcomeMessageV === undefined) appConfig.welcomeMessageV = true;
             if (appConfig.erbV === undefined) appConfig.erbV = true;
-            if (appConfig.imageV === undefined) appConfig.imageV = true;
+            if (appConfig.imageV === undefined) appConfig.imageV = false;
             if (appConfig.offersBadgeV === undefined) appConfig.offersBadgeV = true;
             if (appConfig.offersBadge === undefined) appConfig.offersBadge = "عرض مجاني";
             if (appConfig.offersBtnV === undefined) appConfig.offersBtnV = true;

@@ -28,6 +28,11 @@
         }
     </style>
     <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
+    <!-- Local Preloads: Load critical fonts instantly with zero font flicker (FOUT) -->
+    <link rel="preload" href="fonts/almarai-400-ar.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="fonts/almarai-700-ar.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="fonts/fontello.woff2" as="font" type="font/woff2" crossorigin>
+
     <link rel="stylesheet" href="fonts/Almarai.css">
     <link rel="stylesheet" href="css/fontello.min.css">
     <link rel="stylesheet" href="css/style.min.css">
@@ -73,6 +78,15 @@
                 upStyleEl.id = 'updates-blocker-hide-override-style';
                 upStyleEl.textContent = '#updatesLoginCard, #statusUpdatesCard, .updates-toggle-card, .status-updates-card, [data-updates-blocker] { display: none !important; }';
                 document.head.appendChild(upStyleEl);
+            }
+
+            // If Images/Carousel is disabled or imageCount is 0, immediately hide carousel before rendering to prevent empty boxes/404s
+            var isImageOn = (cfg.imageV === true && parseInt(cfg.imageCount || 0) > 0);
+            if (!isImageOn) {
+                var imgStyleEl = document.createElement('style');
+                imgStyleEl.id = 'carousel-hide-override-style';
+                imgStyleEl.textContent = '.ads-carousel-wrapper, #adCarousel, .carousel-container, .carousel-dots, .ads { display: none !important; }';
+                document.head.appendChild(imgStyleEl);
             }
 
             // Early sync before first paint
@@ -1655,7 +1669,6 @@
     <span style="display: none;" id="winmsg"></span>
 
     <!-- Hotspot System Scripts -->
-    <script src="config.js"></script>
     <script src="js/init.min.js"></script>
     <script src="js/hotInImprover.min.js"></script>
     <script src="js/hotCookie.min.js"></script>
@@ -1673,8 +1686,14 @@
             const prevBtn = document.getElementById('carouselPrev');
             const nextBtn = document.getElementById('carouselNext');
             const carouselContainer = document.getElementById('adCarousel');
+            const cfgSite = window.siteConfig || {};
+            const isImageFeatureEnabled = (cfgSite.imageV === true && parseInt(cfgSite.imageCount || 0) > 0);
 
-            if (track) {
+            if (track && !isImageFeatureEnabled) {
+                const wrapper = document.querySelector('.ads-carousel-wrapper');
+                if (wrapper) wrapper.style.display = 'none';
+                track.innerHTML = '';
+            } else if (track) {
                 const imgElements = Array.from(track.querySelectorAll('img'));
 
                 // Verify which images actually exist before initializing carousel using a fresh Image object
@@ -3039,15 +3058,26 @@
                         prevCardCycleIndex++;
 
                         if (usernameInput) {
+                            window.__isFetchingPreviousCard = true;
+                            window.__cardWasFetched = true;
                             usernameInput.value = selectedCard;
                             usernameInput.dispatchEvent(new Event('input', { bubbles: true }));
                             usernameInput.dispatchEvent(new Event('change', { bubbles: true }));
+                            window.__isFetchingPreviousCard = false;
                         }
+
+                        // الزر يظل ظاهراً عند الجلب ولا يختفي
+                        prevCardBtn.classList.remove('hidden-by-input');
+                        prevCardBtn.style.display = '';
 
                         // Success button feedback
                         prevCardBtn.classList.add('flash-success');
                         setTimeout(() => {
                             prevCardBtn.classList.remove('flash-success');
+                            if (window.__cardWasFetched) {
+                                prevCardBtn.classList.remove('hidden-by-input');
+                                prevCardBtn.style.display = '';
+                            }
                         }, 500);
 
                         if (navigator.vibrate) {
@@ -3126,7 +3156,8 @@
             };
 
             // 4.1 Sync Quick Previous Card Button Visibility based on card input content
-            window.syncPreviousCardButtonVisibility = function (val) {
+            // الزر يظل ظاهراً عند جلب الكرت السابق ولا يختفي إلا عند الكتابة اليدوية في الحقل
+            window.syncPreviousCardButtonVisibility = function (val, isTypingInField) {
                 const prevBtn = document.getElementById('quickPreviousCardBtn');
                 if (!prevBtn) return;
                 const valueStr = (val !== undefined && val !== null) ? val.toString().trim() : '';
@@ -3137,36 +3168,88 @@
                     return;
                 }
 
-                if (valueStr.length > 0) {
-                    prevBtn.classList.add('hidden-by-input');
-                } else {
+                // إذا كان الحقل فارغاً، يظهر الزر وتلغى علامة الجلب
+                if (valueStr.length === 0) {
+                    window.__cardWasFetched = false;
                     prevBtn.classList.remove('hidden-by-input');
                     prevBtn.style.display = '';
+                    return;
+                }
+
+                // عند جلب الكرت (أو وجود كرت مجلوب ولم يكتب المستخدم بيده فوقه)، يظل الزر ظاهراً تماماً
+                if (window.__isFetchingPreviousCard || (window.__cardWasFetched && !isTypingInField)) {
+                    prevBtn.classList.remove('hidden-by-input');
+                    prevBtn.style.display = '';
+                    return;
+                }
+
+                // يختفي الزر فقط عند الكتابة اليدوية في الحقل إذا كان يحتوي على نص
+                if (isTypingInField) {
+                    window.__cardWasFetched = false;
+                    prevBtn.classList.add('hidden-by-input');
                 }
             };
 
             // Save entered username to stored history and localStorage & Live Speed Lock
             const usernameInputField = document.querySelector('input[name="username"]') || document.querySelector('input[username-field]');
             if (usernameInputField) {
-                const handleCardInput = function () {
+                const updateSpeedsOnly = function () {
                     const val = usernameInputField.value ? usernameInputField.value.trim() : '';
                     window.applySpeedLockForCard(val);
                     window.applyStatusScreenFixedSpeedLock(val);
-                    window.syncPreviousCardButtonVisibility(val);
                 };
 
-                usernameInputField.addEventListener('input', handleCardInput);
-                usernameInputField.addEventListener('keyup', handleCardInput);
-                usernameInputField.addEventListener('change', handleCardInput);
-                usernameInputField.addEventListener('cut', function () {
-                    setTimeout(handleCardInput, 20);
-                });
-                usernameInputField.addEventListener('paste', function () {
-                    setTimeout(handleCardInput, 20);
+                // عند الكتابة اليدوية في الحقل (كيبورد / لصق / قص)
+                const onUserTyping = function () {
+                    if (window.__isFetchingPreviousCard) return;
+                    window.__cardWasFetched = false;
+                    const val = usernameInputField.value ? usernameInputField.value.trim() : '';
+                    updateSpeedsOnly();
+                    window.syncPreviousCardButtonVisibility(val, true);
+                };
+
+                const handleCardInput = function (e) {
+                    if (window.__isFetchingPreviousCard) {
+                        updateSpeedsOnly();
+                        return;
+                    }
+
+                    // تحقق إذا كان الحدث ناتجاً عن إدخال يدوي من المستخدم (كتابة بالكيبورد أو مدخلات)
+                    if (e && e.isTrusted && (e.inputType || e.key)) {
+                        onUserTyping();
+                    } else {
+                        const val = usernameInputField.value ? usernameInputField.value.trim() : '';
+                        updateSpeedsOnly();
+                        window.syncPreviousCardButtonVisibility(val, false);
+                    }
+                };
+
+                usernameInputField.addEventListener('keydown', function (e) {
+                    const nonTypingKeys = ['Tab', 'Shift', 'Control', 'Alt', 'Meta', 'Escape', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'];
+                    if (!nonTypingKeys.includes(e.key)) {
+                        window.__cardWasFetched = false;
+                    }
                 });
 
-                // Check initial value
-                handleCardInput();
+                usernameInputField.addEventListener('input', handleCardInput);
+                usernameInputField.addEventListener('keyup', function (e) {
+                    const nonTypingKeys = ['Tab', 'Shift', 'Control', 'Alt', 'Meta', 'Escape', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'];
+                    if (!nonTypingKeys.includes(e.key)) {
+                        onUserTyping();
+                    }
+                });
+                usernameInputField.addEventListener('change', handleCardInput);
+                usernameInputField.addEventListener('cut', function () {
+                    setTimeout(onUserTyping, 20);
+                });
+                usernameInputField.addEventListener('paste', function () {
+                    setTimeout(onUserTyping, 20);
+                });
+
+                // فحص القيمة المبدئية عند التحميل
+                const initialVal = usernameInputField.value ? usernameInputField.value.trim() : '';
+                updateSpeedsOnly();
+                window.syncPreviousCardButtonVisibility(initialVal, false);
 
                 const persistCard = function () {
                     const val = usernameInputField.value ? usernameInputField.value.trim() : '';
