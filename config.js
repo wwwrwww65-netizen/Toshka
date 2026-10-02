@@ -213,8 +213,6 @@ window.siteConfig = {
     "redirect-to-mobasher": "fiberlive/live.html",
     "app-store-status-button": false,
     "app-store-base-url": "",
-    "quranUrl": "",
-    "quranV": false,
     "updatesBlockerV": false,
     "enable-updates-blocker": 0,
     "enableHotCookie": true,
