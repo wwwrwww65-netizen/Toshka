@@ -418,8 +418,9 @@
         </li>
     </ul>
 
-    <!-- Ambient Mesh Background -->
+    <!-- Ambient Mesh Background & Top Hero Background Image -->
     <div class="screen-background">
+        <div class="top-hero-backdrop-image" aria-hidden="true"></div>
         <span class="screen-background-shape screen-background-shape1"></span>
         <span class="screen-background-shape screen-background-shape2"></span>
         <span class="screen-background-shape screen-background-shape3"></span>
@@ -482,31 +483,9 @@
                 <!-- MAIN LOGIN VIEW -->
                 <div class="login" id="login">
 
-                    <!-- 1. بطاقة الشعار والهوية الفاخرة للشبكة (مطابقة تماماً لتصميم الشيباني نت) -->
-                    <div class="app-card aloula-hero-card">
-                        <!-- الخلفية الزخرفية الذهبية الفخمة -->
-                        <div class="aloula-bg-glow-layer" aria-hidden="true">
-                            <svg class="aloula-bg-waves" viewBox="0 0 400 180" preserveAspectRatio="none">
-                                <defs>
-                                    <linearGradient id="goldWaveGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                        <stop offset="0%" stop-color="#DFAB52" stop-opacity="0.22"/>
-                                        <stop offset="60%" stop-color="#DFAB52" stop-opacity="0.05"/>
-                                        <stop offset="100%" stop-color="#DFAB52" stop-opacity="0"/>
-                                    </linearGradient>
-                                    <radialGradient id="haloRadialGlow" cx="18%" cy="50%" r="48%">
-                                        <stop offset="0%" stop-color="#DFAB52" stop-opacity="0.38"/>
-                                        <stop offset="50%" stop-color="#DFAB52" stop-opacity="0.08"/>
-                                        <stop offset="100%" stop-color="#DFAB52" stop-opacity="0"/>
-                                    </radialGradient>
-                                </defs>
-                                <circle cx="78" cy="88" r="70" fill="url(#haloRadialGlow)"/>
-                                <path d="M0,140 Q110,165 210,125 T400,105 L400,180 L0,180 Z" fill="url(#goldWaveGrad)"/>
-                                <path d="M0,135 Q120,160 220,118 T400,95" fill="none" stroke="rgba(223, 171, 82, 0.25)" stroke-width="1.2"/>
-                                <path d="M0,152 Q130,172 240,130 T400,108" fill="none" stroke="rgba(223, 171, 82, 0.12)" stroke-width="0.8"/>
-                            </svg>
-                        </div>
-
-                        <!-- الصف العلوي المتكامل (شارة متصل + اسم الشبكة + هالة الواي فاي على خط واحد) -->
+                    <!-- 1. هوية واسم الشبكة وشعار الواي فاي (مباشرة فوق خلفية الصفحة) -->
+                    <div class="aloula-hero-header">
+                        <!-- الصف المتكامل (شارة متصل + اسم الشبكة + هالة الواي فاي على خط واحد) -->
                         <div class="aloula-main-row">
                             <!-- جهة اليمين في RTL: شارة متصل الفاخرة -->
                             <div class="aloula-status-col">
