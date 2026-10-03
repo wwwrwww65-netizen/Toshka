@@ -2543,7 +2543,7 @@
             }
 
             const defaultSpeedMap = {
-                '': 'سرعة أفتراضية',
+                '': 'سرعة متوسطة 2 ميجا',
                 '128K/512K': 'سرعة منخفضة 512',
                 '256K/1024K': 'سرعة عادية 1 ميجا',
                 '512K/2048K': 'سرعة متوسطة 2 ميجا',
@@ -2563,7 +2563,7 @@
                         const def = window.siteConfig.speedOptions.find(s => s.selected || s.isDefault);
                         if (def) return def.label || def.name;
                     }
-                    return 'سرعة أفتراضية';
+                    return 'سرعة متوسطة 2 ميجا';
                 }
 
                 // Check direct match
