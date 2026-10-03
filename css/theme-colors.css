@@ -213,7 +213,7 @@ body {
 /* الشريط والصف العلوي الموحد (شارة متصل + اسم الشبكة + هالة الواي فاي على خط واحد) */
 .aloula-main-row {
   display:         flex !important;
-  align-items:     center !important;
+  align-items:     flex-start !important;
   justify-content: space-between !important;
   gap:             8px !important;
   width:           100% !important;
@@ -224,12 +224,14 @@ body {
   margin:          0 !important;
 }
 
-/* جهة اليمين: شارة متصل الفاخرة */
+/* جهة اليمين: شارة متصل الفاخرة على مستوى صف اسم الشبكة */
 .aloula-status-col {
   flex:            0 0 auto !important;
   display:         flex !important;
   align-items:     center !important;
   justify-content: flex-start !important;
+  min-height:      44px !important;
+  height:          44px !important;
 }
 
 .aloula-status-pill {
@@ -253,7 +255,7 @@ body {
   display:         flex !important;
   flex-direction:  column !important;
   align-items:     center !important;
-  justify-content: center !important;
+  justify-content: flex-start !important;
   text-align:      center !important;
   min-width:       0 !important;
 }
@@ -263,6 +265,7 @@ body {
   align-items:     center !important;
   justify-content: center !important;
   width:           100% !important;
+  min-height:      44px !important;
 }
 
 .aloula-title-line {
@@ -272,6 +275,7 @@ body {
   gap:             8px !important;
   direction:       rtl !important;
   position:        relative !important;
+  min-height:      44px !important;
 }
 
 /* شعار الشبكة المصغر المدمج بجوار اسم الشبكة */
@@ -398,8 +402,9 @@ body {
 /* جهة اليسار: الهالة الدائرية الذهبية المشعة مع رمز الواي فاي */
 .aloula-halo-col {
   flex-shrink:     0 !important;
-  width:           58px !important;
-  height:          58px !important;
+  width:           52px !important;
+  height:          44px !important;
+  min-height:      44px !important;
   display:         flex !important;
   align-items:     center !important;
   justify-content: center !important;
@@ -409,8 +414,8 @@ body {
 
 .aloula-halo-orb {
   position:        relative !important;
-  width:           52px !important;
-  height:          52px !important;
+  width:           44px !important;
+  height:          44px !important;
   border-radius:   50% !important;
   display:         flex !important;
   align-items:     center !important;
