@@ -56,6 +56,223 @@
             padding: 0;
             min-height: 100%;
         }
+        /* زر البث المباشر في صفحة الحالة: كحلي فاتح مضيء وبارز جداً */
+        #liveBroadcastLink, .live-stream-btn, [data-mobasher] {
+            background: linear-gradient(135deg, #3B82F6 0%, #2563EB 48%, #1D4ED8 100%) !important;
+            border: 1.5px solid #93C5FD !important;
+            box-shadow: 0 4px 18px rgba(37, 99, 235, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.4) !important;
+            color: #FFFFFF !important;
+        }
+        #liveBroadcastLink:hover, .live-stream-btn:hover, [data-mobasher]:hover {
+            background: linear-gradient(135deg, #60A5FA 0%, #3B82F6 50%, #2563EB 100%) !important;
+            border-color: #BFDBFE !important;
+            box-shadow: 0 6px 24px rgba(37, 99, 235, 0.7), 0 0 16px rgba(96, 165, 250, 0.6) !important;
+        }
+        /* إزالة الفراغ بين العداد وأعلى حدود الحاوية */
+        .status-gauge-pod {
+            padding-top: 4px !important;
+        }
+        .gauge-meter-wrapper {
+            margin-top: -2px !important;
+        }
+
+        /* ══════════════════════════════════════════════════════════════
+           أنيميشن إطلاق الصواريخ الواقعي — خطوط بيضاء تكتيكية ودخان إطلاق كثيف
+           Ultra-Smooth Realistic Ballistic Rocket Launch — Pure White Tactical Line-Art
+           ══════════════════════════════════════════════════════════════ */
+        .status-header-card {
+            position: relative !important;
+            overflow: hidden !important;
+        }
+        .status-header-inner-content {
+            position: relative;
+            z-index: 3;
+            pointer-events: auto;
+        }
+        .status-rocket-station {
+            position: absolute;
+            bottom: 0;
+            width: 78px;
+            height: 104px;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.45;
+            will-change: transform;
+        }
+        .status-rocket-station.station-left {
+            left: 2px;
+        }
+        .status-rocket-station.station-right {
+            right: 2px;
+            transform: scaleX(-1);
+        }
+        .rocket-svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+            overflow: visible;
+        }
+
+        /* مسار الصاروخ المستقيم على زاوية السكة دون أي انحراف أو توقف جانبي */
+        .missile-launch-unit {
+            animation: realisticRocketFlight 5s cubic-bezier(0.35, 0.05, 0.85, 0.45) infinite;
+            will-change: transform, opacity;
+            transform-origin: 0 0;
+        }
+
+        /* لهب الدفع النفاث الأبيض بموجات الصدمة الأسرع من الصوت */
+        .white-rocket-thrust {
+            animation: realisticThrustFlame 5s ease-in-out infinite;
+            transform-origin: 0 4px;
+            will-change: transform, opacity;
+        }
+
+        /* سحابة دخان الإطلاق الكثيفة الواقعية المتصاعدة لحظة الإطلاق */
+        .realistic-launch-smoke {
+            animation: realisticLaunchSmokePlume 5s ease-out infinite;
+            transform-origin: 54px 96px;
+            will-change: transform, opacity;
+        }
+
+        /* نبض مؤشر المنصة الأبيض الهادئ */
+        .launcher-beacon-pulse {
+            animation: whiteBeaconPulse 2s ease-in-out infinite;
+        }
+
+        /* التناوب الزمني بين المنصة اليسرى واليمنى بفاصل 2.5 ثانية لإطلاق متناغم مستمر */
+        .status-rocket-station.station-right .missile-launch-unit,
+        .status-rocket-station.station-right .white-rocket-thrust,
+        .status-rocket-station.station-right .realistic-launch-smoke {
+            animation-delay: -2.5s;
+        }
+
+        @keyframes realisticRocketFlight {
+            0%, 14% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            15% {
+                /* لحظة الانفجار الأولي في غرفة الاحتراق */
+                transform: translateY(-2px);
+                opacity: 1;
+            }
+            18% {
+                /* بدء الانطلاق والتسارع الصاروخي الفيزيائي الحقيقي على طول السكة */
+                transform: translateY(-22px);
+                opacity: 1;
+            }
+            26% {
+                /* تسارع فائق السرعة عبر الهواء */
+                transform: translateY(-78px);
+                opacity: 1;
+            }
+            36% {
+                /* سرعة تفوق الصوت واختراق حدود الغلاف الجوي للحاوية */
+                transform: translateY(-185px);
+                opacity: 1;
+            }
+            44% {
+                transform: translateY(-300px);
+                opacity: 0.95;
+            }
+            48% {
+                /* تجاوز حدود الحاوية بالكامل واختفاء */
+                transform: translateY(-390px);
+                opacity: 0;
+            }
+            49% {
+                /* انتظار في الأسفل لإعادة التلقيم */
+                transform: translateY(45px);
+                opacity: 0;
+            }
+            72% {
+                transform: translateY(35px);
+                opacity: 0;
+            }
+            82% {
+                /* انزلاق الصاروخ الجديد على سكة الإطلاق بسلاسة تامة */
+                transform: translateY(10px);
+                opacity: 0.75;
+            }
+            88% {
+                /* إقفال وتثبيت الصاروخ على منصة الإطلاق */
+                transform: translateY(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes realisticThrustFlame {
+            0%, 14% {
+                transform: scaleY(0);
+                opacity: 0;
+            }
+            15% {
+                transform: scaleY(0.6);
+                opacity: 0.85;
+            }
+            18%, 44% {
+                transform: scaleY(1.3);
+                opacity: 1;
+            }
+            46% {
+                transform: scaleY(0.7);
+                opacity: 0.6;
+            }
+            48%, 100% {
+                transform: scaleY(0);
+                opacity: 0;
+            }
+        }
+
+        @keyframes realisticLaunchSmokePlume {
+            0%, 14% {
+                transform: scale(0.15);
+                opacity: 0;
+            }
+            16% {
+                /* انفجار سحابة الدخان الكثيفة في أرضية المنصة */
+                transform: scale(0.75) translateY(-2px);
+                opacity: 0.95;
+            }
+            22% {
+                /* تدحرج وتصاعد كتل الدخان الأبيض وتوسعها */
+                transform: scale(1.2) translateY(-6px);
+                opacity: 0.88;
+            }
+            34% {
+                /* انتشار كثيف وواقعي للسحابة على جانبي المنصة */
+                transform: scale(1.55) translateY(-10px);
+                opacity: 0.65;
+            }
+            46% {
+                /* تلاشي تدريجي للسحابة مع تصاعدها */
+                transform: scale(1.85) translateY(-15px);
+                opacity: 0.35;
+            }
+            58% {
+                transform: scale(2.1) translateY(-20px);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(0.15);
+                opacity: 0;
+            }
+        }
+
+        @keyframes whiteBeaconPulse {
+            0%, 100% {
+                opacity: 0.4;
+                filter: drop-shadow(0 0 1px #FFFFFF);
+            }
+            50% {
+                opacity: 1;
+                filter: drop-shadow(0 0 4px #FFFFFF);
+            }
+        }
     </style>
     <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
     <!-- Local Preloads: Load critical fonts instantly with zero font flicker (FOUT) -->
@@ -64,12 +281,12 @@
     <link rel="preload" href="fonts/fontello.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="img/living_room_430x360.webp" as="image" type="image/webp">
 
-    <link rel="stylesheet" href="fonts/Almarai.css">
-    <link rel="stylesheet" href="css/fontello.min.css">
-    <link rel="stylesheet" href="css/style.min.css">
+    <link rel="stylesheet" href="fonts/Almarai.css?v=20261003_5">
+    <link rel="stylesheet" href="css/fontello.min.css?v=20261003_5">
+    <link rel="stylesheet" href="css/style.min.css?v=20261003_5">
 
     <!-- ملف الألوان الرئيسي — يحتوي على جميع الألوان في مكان واحد بشرح عربي -->
-    <link rel="stylesheet" href="css/theme-colors.css">
+    <link rel="stylesheet" href="css/theme-colors.css?v=20261003_5">
     
     <!-- Core Configuration File Loaded Synchronously in Head -->
     <script src="config.js"></script>
@@ -1191,31 +1408,168 @@
                     <div class="modal-sheet-card" style="max-height: none;">
 
                         <div class="status-header-card">
-                            <div class="status-badge-live">
-                                <span class="status-live-pulse-dot">
-                                    <span class="status-pulse-ring"></span>
-                                    <span class="status-pulse-core"></span>
-                                </span>
-                                <span class="status-wifi-wave-icon">
-                                    <svg viewBox="0 0 24 24" class="wifi-svg-animated" width="18" height="18"
-                                        fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
-                                        stroke-linejoin="round">
-                                        <path class="wifi-arc wifi-arc-3" d="M4 7.5C7.4 4.5 12.6 4.5 16 7.5" />
-                                        <path class="wifi-arc wifi-arc-2" d="M6.5 10.5C8.8 8.5 13.2 8.5 15.5 10.5" />
-                                        <path class="wifi-arc wifi-arc-1" d="M9.5 13.5C10.5 12.5 12.5 12.5 13.5 13.5" />
-                                        <circle class="wifi-dot" cx="11.5" cy="16.5" r="1.5" fill="currentColor"
-                                            stroke="none" />
-                                    </svg>
-                                </span>
-                                <span class="status-badge-text">متصل بالإنترنت الآن</span>
+                            <!-- Left Rocket Launcher Installation (Pure White Tactical Line-Art & Realistic Smoke) -->
+                            <div class="status-rocket-station station-left" aria-hidden="true">
+                                <svg viewBox="0 0 110 135" class="rocket-svg">
+                                    <!-- Vehicle Base & Launch Gantry (Pure White Technical Line-Art) -->
+                                    <g class="launcher-vehicle-base">
+                                        <line x1="8" y1="128" x2="94" y2="128" stroke="#FFFFFF" stroke-width="1.3" stroke-linecap="round" opacity="0.6" />
+                                        <circle cx="20" cy="122" r="5" stroke="#FFFFFF" stroke-width="1.2" fill="none" />
+                                        <circle cx="20" cy="122" r="1.8" fill="#FFFFFF" />
+                                        <circle cx="40" cy="122" r="5" stroke="#FFFFFF" stroke-width="1.2" fill="none" />
+                                        <circle cx="40" cy="122" r="1.8" fill="#FFFFFF" />
+                                        <circle cx="62" cy="122" r="5" stroke="#FFFFFF" stroke-width="1.2" fill="none" />
+                                        <circle cx="62" cy="122" r="1.8" fill="#FFFFFF" />
+                                        <circle cx="82" cy="122" r="5" stroke="#FFFFFF" stroke-width="1.2" fill="none" />
+                                        <circle cx="82" cy="122" r="1.8" fill="#FFFFFF" />
+                                        <path d="M 12 117 L 22 105 L 68 105 L 88 117 Z" stroke="#FFFFFF" stroke-width="1.3" fill="rgba(255, 255, 255, 0.05)" />
+                                        <polygon points="23,107 33,107 31,113 21,113" stroke="#FFFFFF" stroke-width="1" fill="none" opacity="0.8" />
+                                        <line x1="16" y1="105" x2="16" y2="97" stroke="#FFFFFF" stroke-width="1.2" />
+                                        <path d="M 13 97 A 4 4 0 0 1 19 97" stroke="#FFFFFF" stroke-width="1.2" fill="none" />
+                                        <line x1="44" y1="105" x2="52" y2="82" stroke="#FFFFFF" stroke-width="1.5" />
+                                        <line x1="38" y1="108" x2="72" y2="40" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" />
+                                        <line x1="45" y1="96" x2="50" y2="94" stroke="#FFFFFF" stroke-width="1" />
+                                        <line x1="54" y1="78" x2="59" y2="76" stroke="#FFFFFF" stroke-width="1" />
+                                        <circle cx="28" cy="110" r="1.8" fill="#FFFFFF" class="launcher-beacon-pulse" />
+                                    </g>
+
+                                    <!-- Realistic Billowing Launch Smoke (Pure White Line & Mist Art) -->
+                                    <g class="realistic-launch-smoke">
+                                        <path d="M 40 102 C 34 94, 30 84, 42 78 C 50 72, 60 74, 66 80 C 74 76, 84 82, 82 92 C 86 98, 82 108, 70 108 C 64 112, 46 112, 40 102 Z"
+                                              stroke="#FFFFFF" stroke-width="1.2" fill="rgba(255, 255, 255, 0.2)" />
+                                        <path d="M 22 108 C 14 104, 12 92, 22 86 C 30 80, 40 88, 38 98 C 36 106, 28 112, 22 108 Z"
+                                              stroke="#FFFFFF" stroke-width="1" fill="rgba(255, 255, 255, 0.15)" />
+                                        <path d="M 68 106 C 68 96, 78 88, 88 92 C 96 96, 96 108, 88 114 C 78 118, 68 114, 68 106 Z"
+                                              stroke="#FFFFFF" stroke-width="1" fill="rgba(255, 255, 255, 0.15)" />
+                                        <circle cx="48" cy="88" r="6" stroke="rgba(255, 255, 255, 0.6)" stroke-width="1" fill="none" />
+                                        <circle cx="64" cy="88" r="7" stroke="rgba(255, 255, 255, 0.6)" stroke-width="1" fill="none" />
+                                        <circle cx="34" cy="98" r="5" stroke="rgba(255, 255, 255, 0.45)" stroke-width="0.8" fill="none" />
+                                        <circle cx="78" cy="102" r="5" stroke="rgba(255, 255, 255, 0.45)" stroke-width="0.8" fill="none" />
+                                    </g>
+
+                                    <!-- Launch Track Group (Rotated 22 deg along the launch rail) -->
+                                    <g class="launch-gantry-track" transform="translate(56, 72) rotate(22)">
+                                        <g class="missile-launch-unit">
+                                            <g class="white-rocket-thrust">
+                                                <polygon points="0,4 2.5,9 0,14 -2.5,9" stroke="#FFFFFF" stroke-width="1" fill="rgba(255, 255, 255, 0.5)" />
+                                                <polygon points="0,14 2,19 0,24 -2,19" stroke="#FFFFFF" stroke-width="0.9" fill="rgba(255, 255, 255, 0.35)" />
+                                                <polygon points="0,24 1.5,28 0,32 -1.5,28" stroke="#FFFFFF" stroke-width="0.8" fill="rgba(255, 255, 255, 0.2)" />
+                                                <path d="M -3 4 Q -6 20 0 38 Q 6 20 3 4" stroke="#FFFFFF" stroke-width="1.1" fill="rgba(255, 255, 255, 0.15)" />
+                                                <ellipse cx="0" cy="16" rx="5" ry="3" stroke="rgba(255, 255, 255, 0.7)" stroke-width="0.9" fill="none" />
+                                                <ellipse cx="0" cy="30" rx="8" ry="4" stroke="rgba(255, 255, 255, 0.5)" stroke-width="0.9" fill="none" />
+                                            </g>
+                                            <g class="missile-airframe">
+                                                <path d="M -3 -36 L 0 -48 L 3 -36 Z" stroke="#FFFFFF" stroke-width="1.3" fill="rgba(255, 255, 255, 0.2)" />
+                                                <line x1="-3" y1="0" x2="-3" y2="-36" stroke="#FFFFFF" stroke-width="1.2" />
+                                                <line x1="3" y1="0" x2="3" y2="-36" stroke="#FFFFFF" stroke-width="1.2" />
+                                                <line x1="-3" y1="-26" x2="3" y2="-26" stroke="#FFFFFF" stroke-width="0.9" stroke-dasharray="1.5, 1" />
+                                                <line x1="-3" y1="-14" x2="3" y2="-14" stroke="#FFFFFF" stroke-width="0.9" />
+                                                <polygon points="-3,-34 -6,-31 -3,-31" stroke="#FFFFFF" stroke-width="1" fill="none" />
+                                                <polygon points="3,-34 6,-31 3,-31" stroke="#FFFFFF" stroke-width="1" fill="none" />
+                                                <polygon points="-3,-6 -10,0 -3,-1" stroke="#FFFFFF" stroke-width="1.2" fill="rgba(255, 255, 255, 0.15)" />
+                                                <polygon points="3,-6 10,0 3,-1" stroke="#FFFFFF" stroke-width="1.2" fill="rgba(255, 255, 255, 0.15)" />
+                                                <polygon points="-2.5,0 -4,4 4,4 2.5,0" stroke="#FFFFFF" stroke-width="1.2" fill="rgba(255, 255, 255, 0.25)" />
+                                            </g>
+                                        </g>
+                                    </g>
+                                </svg>
                             </div>
-                            <h2 class="title" id="status-title"
-                                style="font-size: 1.25rem; font-weight: 800;">تم تسجيل دخولك بنجاح!</h2>
-                            <p style="font-size: 0.8rem; margin-top: 4px;">
-                                إذا لم يتم الأتصال تلقائيا أضغط <a
-                                    style="text-decoration: underline; font-weight: 700;"
-                                    href="status.html">هنا</a>
-                            </p>
+
+                            <!-- Right Rocket Launcher Installation (Pure White Tactical Line-Art & Realistic Smoke) -->
+                            <div class="status-rocket-station station-right" aria-hidden="true">
+                                <svg viewBox="0 0 110 135" class="rocket-svg">
+                                    <!-- Vehicle Base & Launch Gantry (Pure White Technical Line-Art) -->
+                                    <g class="launcher-vehicle-base">
+                                        <line x1="8" y1="128" x2="94" y2="128" stroke="#FFFFFF" stroke-width="1.3" stroke-linecap="round" opacity="0.6" />
+                                        <circle cx="20" cy="122" r="5" stroke="#FFFFFF" stroke-width="1.2" fill="none" />
+                                        <circle cx="20" cy="122" r="1.8" fill="#FFFFFF" />
+                                        <circle cx="40" cy="122" r="5" stroke="#FFFFFF" stroke-width="1.2" fill="none" />
+                                        <circle cx="40" cy="122" r="1.8" fill="#FFFFFF" />
+                                        <circle cx="62" cy="122" r="5" stroke="#FFFFFF" stroke-width="1.2" fill="none" />
+                                        <circle cx="62" cy="122" r="1.8" fill="#FFFFFF" />
+                                        <circle cx="82" cy="122" r="5" stroke="#FFFFFF" stroke-width="1.2" fill="none" />
+                                        <circle cx="82" cy="122" r="1.8" fill="#FFFFFF" />
+                                        <path d="M 12 117 L 22 105 L 68 105 L 88 117 Z" stroke="#FFFFFF" stroke-width="1.3" fill="rgba(255, 255, 255, 0.05)" />
+                                        <polygon points="23,107 33,107 31,113 21,113" stroke="#FFFFFF" stroke-width="1" fill="none" opacity="0.8" />
+                                        <line x1="16" y1="105" x2="16" y2="97" stroke="#FFFFFF" stroke-width="1.2" />
+                                        <path d="M 13 97 A 4 4 0 0 1 19 97" stroke="#FFFFFF" stroke-width="1.2" fill="none" />
+                                        <line x1="44" y1="105" x2="52" y2="82" stroke="#FFFFFF" stroke-width="1.5" />
+                                        <line x1="38" y1="108" x2="72" y2="40" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" />
+                                        <line x1="45" y1="96" x2="50" y2="94" stroke="#FFFFFF" stroke-width="1" />
+                                        <line x1="54" y1="78" x2="59" y2="76" stroke="#FFFFFF" stroke-width="1" />
+                                        <circle cx="28" cy="110" r="1.8" fill="#FFFFFF" class="launcher-beacon-pulse" />
+                                    </g>
+
+                                    <!-- Realistic Billowing Launch Smoke (Pure White Line & Mist Art) -->
+                                    <g class="realistic-launch-smoke">
+                                        <path d="M 40 102 C 34 94, 30 84, 42 78 C 50 72, 60 74, 66 80 C 74 76, 84 82, 82 92 C 86 98, 82 108, 70 108 C 64 112, 46 112, 40 102 Z"
+                                              stroke="#FFFFFF" stroke-width="1.2" fill="rgba(255, 255, 255, 0.2)" />
+                                        <path d="M 22 108 C 14 104, 12 92, 22 86 C 30 80, 40 88, 38 98 C 36 106, 28 112, 22 108 Z"
+                                              stroke="#FFFFFF" stroke-width="1" fill="rgba(255, 255, 255, 0.15)" />
+                                        <path d="M 68 106 C 68 96, 78 88, 88 92 C 96 96, 96 108, 88 114 C 78 118, 68 114, 68 106 Z"
+                                              stroke="#FFFFFF" stroke-width="1" fill="rgba(255, 255, 255, 0.15)" />
+                                        <circle cx="48" cy="88" r="6" stroke="rgba(255, 255, 255, 0.6)" stroke-width="1" fill="none" />
+                                        <circle cx="64" cy="88" r="7" stroke="rgba(255, 255, 255, 0.6)" stroke-width="1" fill="none" />
+                                        <circle cx="34" cy="98" r="5" stroke="rgba(255, 255, 255, 0.45)" stroke-width="0.8" fill="none" />
+                                        <circle cx="78" cy="102" r="5" stroke="rgba(255, 255, 255, 0.45)" stroke-width="0.8" fill="none" />
+                                    </g>
+
+                                    <!-- Launch Track Group (Rotated 22 deg along the launch rail) -->
+                                    <g class="launch-gantry-track" transform="translate(56, 72) rotate(22)">
+                                        <g class="missile-launch-unit">
+                                            <g class="white-rocket-thrust">
+                                                <polygon points="0,4 2.5,9 0,14 -2.5,9" stroke="#FFFFFF" stroke-width="1" fill="rgba(255, 255, 255, 0.5)" />
+                                                <polygon points="0,14 2,19 0,24 -2,19" stroke="#FFFFFF" stroke-width="0.9" fill="rgba(255, 255, 255, 0.35)" />
+                                                <polygon points="0,24 1.5,28 0,32 -1.5,28" stroke="#FFFFFF" stroke-width="0.8" fill="rgba(255, 255, 255, 0.2)" />
+                                                <path d="M -3 4 Q -6 20 0 38 Q 6 20 3 4" stroke="#FFFFFF" stroke-width="1.1" fill="rgba(255, 255, 255, 0.15)" />
+                                                <ellipse cx="0" cy="16" rx="5" ry="3" stroke="rgba(255, 255, 255, 0.7)" stroke-width="0.9" fill="none" />
+                                                <ellipse cx="0" cy="30" rx="8" ry="4" stroke="rgba(255, 255, 255, 0.5)" stroke-width="0.9" fill="none" />
+                                            </g>
+                                            <g class="missile-airframe">
+                                                <path d="M -3 -36 L 0 -48 L 3 -36 Z" stroke="#FFFFFF" stroke-width="1.3" fill="rgba(255, 255, 255, 0.2)" />
+                                                <line x1="-3" y1="0" x2="-3" y2="-36" stroke="#FFFFFF" stroke-width="1.2" />
+                                                <line x1="3" y1="0" x2="3" y2="-36" stroke="#FFFFFF" stroke-width="1.2" />
+                                                <line x1="-3" y1="-26" x2="3" y2="-26" stroke="#FFFFFF" stroke-width="0.9" stroke-dasharray="1.5, 1" />
+                                                <line x1="-3" y1="-14" x2="3" y2="-14" stroke="#FFFFFF" stroke-width="0.9" />
+                                                <polygon points="-3,-34 -6,-31 -3,-31" stroke="#FFFFFF" stroke-width="1" fill="none" />
+                                                <polygon points="3,-34 6,-31 3,-31" stroke="#FFFFFF" stroke-width="1" fill="none" />
+                                                <polygon points="-3,-6 -10,0 -3,-1" stroke="#FFFFFF" stroke-width="1.2" fill="rgba(255, 255, 255, 0.15)" />
+                                                <polygon points="3,-6 10,0 3,-1" stroke="#FFFFFF" stroke-width="1.2" fill="rgba(255, 255, 255, 0.15)" />
+                                                <polygon points="-2.5,0 -4,4 4,4 2.5,0" stroke="#FFFFFF" stroke-width="1.2" fill="rgba(255, 255, 255, 0.25)" />
+                                            </g>
+                                        </g>
+                                    </g>
+                                </svg>
+                            </div>
+
+                            <!-- Header Main Text Content (Foreground z-index: 3) -->
+                            <div class="status-header-inner-content">
+                                <div class="status-badge-live">
+                                    <span class="status-live-pulse-dot">
+                                        <span class="status-pulse-ring"></span>
+                                        <span class="status-pulse-core"></span>
+                                    </span>
+                                    <span class="status-wifi-wave-icon">
+                                        <svg viewBox="0 0 24 24" class="wifi-svg-animated" width="18" height="18"
+                                            fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+                                            stroke-linejoin="round">
+                                            <path class="wifi-arc wifi-arc-3" d="M4 7.5C7.4 4.5 12.6 4.5 16 7.5" />
+                                            <path class="wifi-arc wifi-arc-2" d="M6.5 10.5C8.8 8.5 13.2 8.5 15.5 10.5" />
+                                            <path class="wifi-arc wifi-arc-1" d="M9.5 13.5C10.5 12.5 12.5 12.5 13.5 13.5" />
+                                            <circle class="wifi-dot" cx="11.5" cy="16.5" r="1.5" fill="currentColor"
+                                                stroke="none" />
+                                        </svg>
+                                    </span>
+                                    <span class="status-badge-text">متصل بالإنترنت الآن</span>
+                                </div>
+                                <h2 class="title" id="status-title"
+                                    style="font-size: 1.25rem; font-weight: 800;">تم تسجيل دخولك بنجاح!</h2>
+                                <p style="font-size: 0.8rem; margin-top: 4px;">
+                                    إذا لم يتم الأتصال تلقائيا أضغط <a
+                                        style="text-decoration: underline; font-weight: 700;"
+                                        href="status.html">هنا</a>
+                                </p>
+                            </div>
                         </div>
 
                         <!-- Modern Ticker / News Bar in Status -->
@@ -1229,7 +1583,7 @@
 
                         <!-- Entertainment Direct Links (Live Broadcast & Lounge/Break) -->
                         <div class="entertainment-links" id="entertainmentLinks" style="display: flex; flex-direction: row; gap: 10px; width: 100%; margin: 14px 0;">
-                            <a class="stream-card-link live-stream-btn" href="fiberlive/live.html" id="liveBroadcastLink" data-mobasher>
+                            <a class="stream-card-link live-stream-btn" href="fiberlive/live.html" id="liveBroadcastLink" data-mobasher style="background: linear-gradient(135deg, #3B82F6 0%, #2563EB 48%, #1D4ED8 100%) !important; border: 1.5px solid #93C5FD !important; box-shadow: 0 4px 18px rgba(37, 99, 235, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.4) !important; color: #FFFFFF !important;">
                                 <span class="live-dot-pulse"></span>
                                 <svg viewBox="0 0 24 24">
                                     <path
@@ -1329,7 +1683,7 @@
                             <!-- 1. Central Hero Speedometer / Radial Gauge (العداد الدائري للرصيد المتبقي) -->
                             <div class="status-gauge-pod" id="statusGaugePod" remain_bytes_total>
                                 <div class="gauge-meter-wrapper">
-                                    <svg class="gauge-svg" viewBox="0 0 200 120" preserveAspectRatio="xMidYMid meet">
+                                    <svg class="gauge-svg" viewBox="0 20 200 96" preserveAspectRatio="xMidYMid meet">
                                         <defs>
                                             <linearGradient id="gaugeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
                                                 <stop offset="0%" stop-color="#38BDF8" />
