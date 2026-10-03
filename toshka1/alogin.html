@@ -1,0 +1,12 @@
+$(if var == "")
+<script>
+	window.location.href="index.html"
+</script>
+$(else)
+{
+	"logged_in" 		: "$(logged-in)",
+	"username" 			: "$(username)",
+	"link_login_only" 	: "$(link-login-only)",
+	"action"			: "onLoggedIn"
+}
+$(endif)
