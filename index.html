@@ -1065,7 +1065,7 @@
                                 speedSel.innerHTML = '<option value="" disabled hidden selected>أختيار سرعة الإنترنت</option>';
 
                                 var defaultPill = null;
-                                var defaultSp = speeds.find(function(s) { return s.isDefault; }) || speeds[0];
+                                var defaultSp = speeds.find(function(s) { return s.isDefault; }) || null;
 
                                 speeds.forEach(function (sp) {
                                     // زر الـ pill - يظهر الاسم فقط
@@ -1080,7 +1080,7 @@
                                         '<span class="pill-dot"></span>' +
                                         '<span class="pill-text">' + sp.name + '</span>';
 
-                                    if (sp === defaultSp || sp.isDefault) {
+                                    if (defaultSp && (sp === defaultSp || sp.isDefault)) {
                                         btn.classList.add("active");
                                         defaultPill = btn;
                                     }
@@ -1091,13 +1091,16 @@
                                     var opt = document.createElement("option");
                                     opt.value = sp.value;
                                     opt.textContent = sp.name;
-                                    if (sp === defaultSp || sp.isDefault) opt.selected = true;
+                                    if (defaultSp && (sp === defaultSp || sp.isDefault)) opt.selected = true;
                                     speedSel.appendChild(opt);
                                 });
 
                                 if (defaultSp) {
                                     speedSel.value = defaultSp.value;
                                     if (speedDisp) speedDisp.textContent = defaultSp.name;
+                                } else {
+                                    speedSel.value = "";
+                                    if (speedDisp) speedDisp.textContent = "أختيار سرعة الإنترنت";
                                 }
 
                                 // Scroll to active pill automatically so the selected speed is visible and centered (without scrolling the window)
@@ -1108,25 +1111,37 @@
                                         pillsRow.scrollTo({ left: scrollTarget, behavior: 'smooth' });
                                     }
                                 }
-                                setTimeout(scrollToActivePill, 100);
-                                setTimeout(scrollToActivePill, 400);
+                                if (defaultPill) {
+                                    setTimeout(scrollToActivePill, 100);
+                                    setTimeout(scrollToActivePill, 400);
+                                }
 
                                 // أحداث أزرار الـ pill
                                 var allPills = pillsRow.querySelectorAll(".speed-pill-btn");
                                 allPills.forEach(function (pill) {
                                     pill.addEventListener("click", function () {
-                                        allPills.forEach(function (p) { p.classList.remove("active"); });
-                                        pill.classList.add("active");
-                                        var val = pill.getAttribute("data-speed");
-                                        var title = pill.getAttribute("data-speed-title");
-                                        if (speedSel) speedSel.value = val;
-                                        if (speedDisp) speedDisp.textContent = title;
-                                        scrollToActivePill();
-                                        // sync modal list too
-                                        var modalCards = document.querySelectorAll("#speedModalList .speed-card-option");
-                                        modalCards.forEach(function (c) {
-                                            c.classList.toggle("active", c.getAttribute("data-speed") === val);
-                                        });
+                                        var isCurrentlyActive = pill.classList.contains("active");
+                                        if (isCurrentlyActive) {
+                                            // إلغاء التحديد في حال النقر مجدداً ليعود بدون تحديد سرعة كالمشروع السابق
+                                            pill.classList.remove("active");
+                                            if (speedSel) speedSel.value = "";
+                                            if (speedDisp) speedDisp.textContent = "أختيار سرعة الإنترنت";
+                                            var modalCards = document.querySelectorAll("#speedModalList .speed-card-option");
+                                            modalCards.forEach(function (c) { c.classList.remove("active"); });
+                                        } else {
+                                            allPills.forEach(function (p) { p.classList.remove("active"); });
+                                            pill.classList.add("active");
+                                            var val = pill.getAttribute("data-speed");
+                                            var title = pill.getAttribute("data-speed-title");
+                                            if (speedSel) speedSel.value = val;
+                                            if (speedDisp) speedDisp.textContent = title;
+                                            scrollToActivePill();
+                                            // sync modal list too
+                                            var modalCards = document.querySelectorAll("#speedModalList .speed-card-option");
+                                            modalCards.forEach(function (c) {
+                                                c.classList.toggle("active", c.getAttribute("data-speed") === val);
+                                            });
+                                        }
                                     });
                                 });
                             }
@@ -1135,9 +1150,9 @@
                             var loginModal = document.getElementById("speedModalList");
                             if (loginModal) {
                                 loginModal.innerHTML = "";
-                                var defaultSp = speeds.find(function(s) { return s.isDefault; }) || speeds[0];
+                                var defaultSpModal = speeds.find(function(s) { return s.isDefault; }) || null;
                                 speeds.forEach(function (sp) {
-                                    var isDef = (sp === defaultSp || sp.isDefault);
+                                    var isDef = !!(defaultSpModal && (sp === defaultSpModal || sp.isDefault));
                                     var div = document.createElement("div");
                                     div.className = "speed-card-option" + (isDef ? " active" : "");
                                     div.setAttribute("data-speed", sp.value);
@@ -1152,22 +1167,31 @@
                                 var modalCards = loginModal.querySelectorAll(".speed-card-option");
                                 modalCards.forEach(function (card) {
                                     card.addEventListener("click", function () {
-                                        modalCards.forEach(function (c) { c.classList.remove("active"); });
-                                        card.classList.add("active");
-                                        var val = card.getAttribute("data-speed");
-                                        var title = card.getAttribute("data-speed-title");
-                                        if (speedSel) speedSel.value = val;
-                                        if (speedDisp) speedDisp.textContent = title;
-                                        // sync pills too
-                                        var pills = document.querySelectorAll("#speedPillsRow .speed-pill-btn");
-                                        pills.forEach(function (p) {
-                                            var isActive = p.getAttribute("data-speed") === val;
-                                            p.classList.toggle("active", isActive);
-                                            if (isActive && pillsRow) {
-                                                var scrollTarget = p.offsetLeft - (pillsRow.clientWidth / 2) + (p.clientWidth / 2);
-                                                pillsRow.scrollTo({ left: scrollTarget, behavior: 'smooth' });
-                                            }
-                                        });
+                                        var isCurrentlyActive = card.classList.contains("active");
+                                        if (isCurrentlyActive) {
+                                            card.classList.remove("active");
+                                            if (speedSel) speedSel.value = "";
+                                            if (speedDisp) speedDisp.textContent = "أختيار سرعة الإنترنت";
+                                            var pills = document.querySelectorAll("#speedPillsRow .speed-pill-btn");
+                                            pills.forEach(function (p) { p.classList.remove("active"); });
+                                        } else {
+                                            modalCards.forEach(function (c) { c.classList.remove("active"); });
+                                            card.classList.add("active");
+                                            var val = card.getAttribute("data-speed");
+                                            var title = card.getAttribute("data-speed-title");
+                                            if (speedSel) speedSel.value = val;
+                                            if (speedDisp) speedDisp.textContent = title;
+                                            // sync pills too
+                                            var pills = document.querySelectorAll("#speedPillsRow .speed-pill-btn");
+                                            pills.forEach(function (p) {
+                                                var isActive = p.getAttribute("data-speed") === val;
+                                                p.classList.toggle("active", isActive);
+                                                if (isActive && pillsRow) {
+                                                    var scrollTarget = p.offsetLeft - (pillsRow.clientWidth / 2) + (p.clientWidth / 2);
+                                                    pillsRow.scrollTo({ left: scrollTarget, behavior: 'smooth' });
+                                                }
+                                            });
+                                        }
                                         setTimeout(function () {
                                             if (typeof closeAppModal === "function") closeAppModal("speed-modal");
                                         }, 180);
@@ -1181,9 +1205,9 @@
                             var triggerText = document.getElementById("statusSpeedTriggerText");
                             if (statusModal) {
                                 statusModal.innerHTML = "";
-                                var defaultSp = speeds.find(function(s) { return s.isDefault; }) || speeds[0];
+                                var defaultSp = speeds.find(function(s) { return s.isDefault; }) || null;
                                 speeds.forEach(function (sp) {
-                                    var isDef = (sp === defaultSp || sp.isDefault);
+                                    var isDef = !!(defaultSp && (sp === defaultSp || sp.isDefault));
                                     var div = document.createElement("div");
                                     div.className = "speed-card-option" + (isDef ? " active" : "");
                                     div.setAttribute("data-status-speed", sp.value);
@@ -1194,8 +1218,8 @@
                                     statusModal.appendChild(div);
                                 });
 
-                                if (triggerText && defaultSp) {
-                                    triggerText.textContent = defaultSp.name;
+                                if (triggerText) {
+                                    triggerText.textContent = defaultSp ? defaultSp.name : "غير محدد";
                                 }
 
                                 if (speedchange) {
@@ -1601,7 +1625,7 @@
                         </div>
 
                         <!-- Speed Change Card with White Background & Maroon Text -->
-                        <div class="statusdiv" id="statusSpeedChangeContainer">
+                        <div class="statusdiv" id="statusSpeedChangeContainer" style="display: none;">
                             <div
                                 style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
                                 <span class="status-metric-label">
@@ -1612,7 +1636,7 @@
                                     <span>سرعة الكرت الحالية:</span>
                                 </span>
                                 <span id="sspeed"
-                                    style="font-size: 0.95rem; font-weight: 800; color: #DFAB52;">سرعة أفتراضية</span>
+                                    style="font-size: 0.95rem; font-weight: 800; color: #DFAB52;">غير محدد</span>
                             </div>
                             <p style="font-size: 0.82rem; margin-bottom: 8px;">أختر سرعة أقل للحفاظ على
                                 رصيد الكرت</p>
@@ -1623,7 +1647,7 @@
                                     <svg viewBox="0 0 24 24" class="status-trigger-icon">
                                         <path d="M7 2v11h3v9l7-12h-4l4-8z" />
                                     </svg>
-                                    <span id="statusSpeedTriggerText">سرعة أفتراضية</span>
+                                    <span id="statusSpeedTriggerText">غير محدد</span>
                                 </div>
                                 <svg viewBox="0 0 24 24" class="status-trigger-chevron">
                                     <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z" />
@@ -3441,31 +3465,37 @@
                 if (speedDisp) speedDisp.classList.remove('speed-locked-badge');
 
                 const activePill = document.querySelector('#speedPillsRow .speed-pill-btn.active');
-                if (!activePill && pills.length > 0) {
-                    const speeds = (window.siteConfig && window.siteConfig.speedOptions) || [];
-                    const def = speeds.find(s => s.selected || s.isDefault) || speeds[0];
-                    if (def) {
-                        const matchPill = document.querySelector(`#speedPillsRow .speed-pill-btn[data-speed="${def.value}"]`) || pills[0];
-                        if (matchPill) matchPill.classList.add('active');
-                        if (speedSel) speedSel.value = def.value;
-                        if (speedDisp) speedDisp.textContent = def.label || def.name;
-                    }
-                } else if (activePill) {
+                if (activePill) {
                     const val = activePill.getAttribute('data-speed');
                     const title = activePill.getAttribute('data-speed-title');
                     if (speedSel) speedSel.value = val;
                     if (speedDisp) speedDisp.textContent = title;
+                } else {
+                    if (speedSel) speedSel.value = "";
+                    if (speedDisp) speedDisp.textContent = "أختيار سرعة الإنترنت";
                 }
             };
 
             window.applyStatusScreenFixedSpeedLock = function (userStr) {
-                // إتاحة خيارات تغيير السرعة في شاشة الحالة دائماً لكافة الكروت
-                var statusSpeedContainer = document.getElementById('statusSpeedChangeContainer') || document.querySelector('#status .statusdiv');
+                var statusSpeedContainer = document.getElementById('statusSpeedChangeContainer');
                 var statusTrigger = document.getElementById('statusSpeedTrigger');
 
+                // فحص إذا كان للمستخدم سرعة مختارة أم أنه لم يحدد سرعة
+                var currentSpeed = "";
+                try {
+                    var sspeedEl = document.getElementById("sspeed");
+                    var speedTxt = sspeedEl ? sspeedEl.innerText.trim() : "";
+                    currentSpeed = localStorage.getItem("hotspot_speed") || "";
+                    if (speedTxt === "غير محدد") currentSpeed = "";
+                } catch (e) {}
+
                 if (statusSpeedContainer) {
-                    statusSpeedContainer.style.removeProperty('display');
-                    statusSpeedContainer.classList.remove('speed-locked-fixed');
+                    if (!currentSpeed || currentSpeed === "" || currentSpeed === "undefined") {
+                        statusSpeedContainer.style.display = 'none';
+                    } else {
+                        statusSpeedContainer.style.display = '';
+                        statusSpeedContainer.classList.remove('speed-locked-fixed');
+                    }
                 }
 
                 if (statusTrigger) {

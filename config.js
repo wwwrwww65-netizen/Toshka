@@ -17,7 +17,7 @@ window.siteConfig = {
     "speed-select": 0,
     "speed-var": "speed",
     "speed-option": "",
-    "defaultSpeed": "512K/2048K",
+    "defaultSpeed": "",
     "speedOptions": [
         {
             "label": "سرعة منخفضة 512",
@@ -34,8 +34,8 @@ window.siteConfig = {
         {
             "label": "سرعة متوسطة 2 ميجا",
             "value": "512K/2048K",
-            "selected": true,
-            "isDefault": true
+            "selected": false,
+            "isDefault": false
         },
         {
             "label": "سرعة مفتوحة",
